@@ -7,6 +7,6 @@ public class Hw1 {
     private static final Logger log = LoggerFactory.getLogger(Hw1.class);
 
     static void main() {
-        log.info("Initial setup - done");
+        log.info("ChatGPT - самый лучший ментор!! :)");
     }
 }
