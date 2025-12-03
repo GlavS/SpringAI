@@ -4,9 +4,5 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
   https://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="bean" class="ru.otus.sample.Bean">
-        <!-- collaborators and configuration for this bean go here -->
-        <constructor-arg value="Vasya"/>
-        <property name="csv" value="works.csv"/>
-    </bean>
+
 </beans>
