@@ -65,3 +65,7 @@ tasks.withType<ShadowJar> {
     append("META-INF/spring.handlers")
     append("META-INF/spring.schemas")
 }
+
+tasks.withType<JavaExec> {
+    standardInput = System.`in`
+}

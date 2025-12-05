@@ -14,11 +14,12 @@ public class ConsoleIOService implements IOService {
         this.out = out;
     }
 
-
+    @Override
     public void printLine(String msg) {
         out.println(msg);
     }
 
+    @Override
     public int readChoice() {
         out.println("Введите пункт меню: ");
         String choice = in.nextLine();
