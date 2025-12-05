@@ -1,10 +1,16 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
+
 plugins {
     java
     application
     id("com.diffplug.spotless") version "6.25.0"
     id("com.gradleup.shadow") version "8.3.9"
+}
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(25))
+    }
 }
 
 application {
@@ -33,18 +39,6 @@ spotless {
         palantirJavaFormat("2.74.0")
 
         // Эти две опции многие команды используют всегда
-        trimTrailingWhitespace()
-        endWithNewline()
-    }
-
-    kotlin {
-        ktlint()
-        trimTrailingWhitespace()
-        endWithNewline()
-    }
-
-    kotlinGradle {
-        ktlint()
         trimTrailingWhitespace()
         endWithNewline()
     }
