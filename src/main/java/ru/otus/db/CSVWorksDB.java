@@ -1,11 +1,10 @@
-package ru.otus.worksdb;
+package ru.otus.db;
 
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.util.ArrayList;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +23,7 @@ public class CSVWorksDB implements WorksDB {
 
     @Override
     public List<Work> getDB() {
-        List<Work> works = new ArrayList<>();
+        List<Work> works;
         try (Reader reader = new InputStreamReader(resource.getInputStream())) {
             CsvToBean<Work> csvToBean = new CsvToBeanBuilder<Work>(reader)
                     .withType(Work.class)

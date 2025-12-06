@@ -10,7 +10,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.io.ClassPathResource;
 import ru.otus.model.Work;
-import ru.otus.worksdb.CSVWorksDB;
+import ru.otus.db.CSVWorksDB;
 
 public class Runner {
 
