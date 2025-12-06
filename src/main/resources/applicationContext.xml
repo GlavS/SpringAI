@@ -3,13 +3,13 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
   https://www.springframework.org/schema/beans/spring-beans.xsd">
-
+<!--Команды меню-->
     <bean id="showRepertoire" class="ru.otus.menu.commands.ShowRepertoireCommand"/>
     <bean id="workByComposer" class="ru.otus.menu.commands.WorkByComposerCommand"/>
     <bean id="workByDifficulty" class="ru.otus.menu.commands.WorkByDifficultyCommand"/>
     <bean id="addWork" class="ru.otus.menu.commands.AddWorkCommand"/>
     <bean id="exitCommand" class="ru.otus.menu.commands.ExitCommand"/>
-
+<!---->
     <bean id="menu" class="ru.otus.menu.Menu">
         <constructor-arg>
             <list>
@@ -41,8 +41,29 @@
             </list>
         </constructor-arg>
     </bean>
+
     <bean id="db" class="ru.otus.db.CSVWorksDB">
         <constructor-arg value="classpath:repertoire.csv"/>
+    </bean>
+
+<!-- Два специальных бина для IOService   ________________________________________________________________-->
+    <bean id="stdin" class="org.springframework.beans.factory.config.FieldRetrievingFactoryBean">
+        <property name="staticField" value="java.lang.System.in"/>
+    </bean>
+
+    <bean id="stdout" class="org.springframework.beans.factory.config.FieldRetrievingFactoryBean">
+        <property name="staticField" value="java.lang.System.out"/>
+    </bean>
+<!--_____________________________________________________________________________________________________-->
+
+    <bean id="ioService" class="ru.otus.console.ConsoleIOService">
+        <constructor-arg ref="stdin"/>
+        <constructor-arg ref="stdout"/>
+    </bean>
+
+    <bean id="consoleDisplayService" class="ru.otus.menu.ConsoleMenuDisplayService">
+        <constructor-arg ref="menu"/>
+        <constructor-arg ref="ioService"/>
     </bean>
 
 </beans>

@@ -1,11 +1,10 @@
 package ru.otus.repository;
 
+import java.util.List;
+import java.util.Optional;
 import ru.otus.db.WorksDB;
 import ru.otus.model.Difficulty;
 import ru.otus.model.Work;
-
-import java.util.List;
-import java.util.Optional;
 
 public class WorkRepositoryImpl implements WorkRepository {
 
@@ -14,7 +13,6 @@ public class WorkRepositoryImpl implements WorkRepository {
     public WorkRepositoryImpl(WorksDB db) {
         this.db = db;
     }
-
 
     @Override
     public List<Work> getAll() {
@@ -28,12 +26,16 @@ public class WorkRepositoryImpl implements WorkRepository {
 
     @Override
     public List<Work> getByComposer(String composerSurname) {
-        return db.getDB().stream().filter(work -> work.getComposer().contains(composerSurname)).toList();
+        return db.getDB().stream()
+                .filter(work -> work.getComposer().contains(composerSurname))
+                .toList();
     }
 
     @Override
     public List<Work> getByDifficulty(Difficulty difficulty) {
-        return db.getDB().stream().filter(work -> work.getDifficulty() == difficulty).toList();
+        return db.getDB().stream()
+                .filter(work -> work.getDifficulty() == difficulty)
+                .toList();
     }
 
     @Override

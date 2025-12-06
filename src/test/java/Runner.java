@@ -9,8 +9,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.io.ClassPathResource;
-import ru.otus.model.Work;
 import ru.otus.db.CSVWorksDB;
+import ru.otus.menu.ConsoleMenuDisplayService;
+import ru.otus.model.Work;
 
 public class Runner {
 
@@ -40,5 +41,12 @@ public class Runner {
             throw new RuntimeException(e);
         }
         System.out.println(works);
+    }
+
+    @Test
+    void displayMenu() {
+        ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+        ConsoleMenuDisplayService consoleMenuDisplayService = context.getBean(ConsoleMenuDisplayService.class);
+        consoleMenuDisplayService.displayMenu();
     }
 }
