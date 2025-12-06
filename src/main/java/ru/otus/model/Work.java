@@ -1,12 +1,22 @@
 package ru.otus.model;
 
+import com.opencsv.bean.CsvBindByName;
 import java.util.Objects;
 
 public class Work {
+    @CsvBindByName
     Long id;
+
+    @CsvBindByName
     String composer;
+
+    @CsvBindByName
     String title;
+
+    @CsvBindByName
     String instrument;
+
+    @CsvBindByName
     Difficulty difficulty;
 
     public Long getId() {
@@ -56,6 +66,8 @@ public class Work {
         this.instrument = instrument;
         this.difficulty = difficulty;
     }
+
+    public Work() {}
 
     @Override
     public boolean equals(Object o) {

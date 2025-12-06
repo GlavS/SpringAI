@@ -1,8 +1,7 @@
 package ru.otus.worksdb;
 
-import ru.otus.model.Work;
-
 import java.util.List;
+import ru.otus.model.Work;
 
 public interface WorksDB {
     List<Work> getDB();

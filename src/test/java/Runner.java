@@ -1,18 +1,44 @@
-import java.util.Map;
+import com.opencsv.bean.CsvToBean;
+import com.opencsv.bean.CsvToBeanBuilder;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import ru.otus.menu.Command;
-import ru.otus.menu.Menu;
+import org.springframework.core.io.ClassPathResource;
+import ru.otus.model.Work;
+import ru.otus.worksdb.CSVWorksDB;
 
 public class Runner {
 
     @Test
     public void testRunApplication() {
+
         ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
-        Menu menu = (Menu) context.getBean("menu");
-        menu.menuItems().forEach(item -> System.out.printf("%d. %s%n", item.id(), item.name()));
-        Map<String, Command> commands = context.getBeansOfType(Command.class);
-        System.out.println(commands);
+        CSVWorksDB csvWorksDB = context.getBean(CSVWorksDB.class);
+        List<Work> works = csvWorksDB.getDB();
+        System.out.println(works);
+    }
+
+    @Test
+    void createReader() {
+        CsvToBean<Work> csvReader;
+        List<Work> works = new ArrayList<>();
+        try (Reader reader = new InputStreamReader(new ClassPathResource("repertoire.csv").getInputStream())) {
+
+            csvReader = new CsvToBeanBuilder<Work>(reader)
+                    .withSeparator(';')
+                    .withType(Work.class)
+                    .build();
+            works = csvReader.parse();
+
+        } catch (IOException e) {
+            System.err.printf("%s%s%n", e.getMessage(), e);
+            throw new RuntimeException(e);
+        }
+        System.out.println(works);
     }
 }

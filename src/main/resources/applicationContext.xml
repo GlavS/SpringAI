@@ -41,5 +41,8 @@
             </list>
         </constructor-arg>
     </bean>
+    <bean id="db" class="ru.otus.worksdb.CSVWorksDB">
+        <constructor-arg value="classpath:repertoire.csv"/>
+    </bean>
 
 </beans>
