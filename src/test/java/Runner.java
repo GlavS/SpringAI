@@ -11,6 +11,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.io.ClassPathResource;
 import ru.otus.db.CSVWorksDB;
 import ru.otus.menu.ConsoleMenuDisplayService;
+import ru.otus.menu.commands.ShowRepertoireCommand;
 import ru.otus.model.Work;
 
 public class Runner {
@@ -48,5 +49,12 @@ public class Runner {
         ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
         ConsoleMenuDisplayService consoleMenuDisplayService = context.getBean(ConsoleMenuDisplayService.class);
         consoleMenuDisplayService.displayMenu();
+    }
+
+    @Test
+    void allRepertoireCommands() {
+        ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+        ShowRepertoireCommand showRepertoireCommand = context.getBean(ShowRepertoireCommand.class);
+        showRepertoireCommand.execute();
     }
 }

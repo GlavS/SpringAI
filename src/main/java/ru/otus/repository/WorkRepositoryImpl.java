@@ -6,6 +6,7 @@ import ru.otus.db.WorksDB;
 import ru.otus.model.Difficulty;
 import ru.otus.model.Work;
 
+@SuppressWarnings("unused")
 public class WorkRepositoryImpl implements WorkRepository {
 
     private final WorksDB db;
