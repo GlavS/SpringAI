@@ -15,7 +15,7 @@ public class ConsoleMenuDisplayService implements MenuDisplayService {
     @Override
     public void displayMenu() {
         menu.menuItems().forEach(item -> {
-            ioService.printLineF("%d. %s%n", item.id(), item.name());
+            ioService.printLineFormatted("%d. %s%n", item.id(), item.name());
         });
     }
 }

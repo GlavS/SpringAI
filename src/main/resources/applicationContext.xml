@@ -8,7 +8,10 @@
         <constructor-arg ref="workRepository"/>
         <constructor-arg ref="ioService"/>
     </bean>
-    <bean id="workByComposer" class="ru.otus.menu.commands.WorkByComposerCommand"/>
+    <bean id="workByComposer" class="ru.otus.menu.commands.WorkByComposerCommand">
+        <constructor-arg ref="workRepository"/>
+        <constructor-arg ref="ioService"/>
+    </bean>
     <bean id="workByDifficulty" class="ru.otus.menu.commands.WorkByDifficultyCommand"/>
     <bean id="addWork" class="ru.otus.menu.commands.AddWorkCommand"/>
     <bean id="exitCommand" class="ru.otus.menu.commands.ExitCommand"/>

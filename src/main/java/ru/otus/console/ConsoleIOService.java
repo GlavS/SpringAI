@@ -20,7 +20,7 @@ public class ConsoleIOService implements IOService {
     }
 
     @Override
-    public int readChoice() {
+    public int readMenuChoice() {
         out.println("Введите пункт меню: ");
         String choice = in.nextLine();
         int choiceInt;
@@ -34,7 +34,13 @@ public class ConsoleIOService implements IOService {
     }
 
     @Override
-    public void printLineF(String format, Object... args) {
+    public void printLineFormatted(String format, Object... args) {
         out.printf(format, args);
+    }
+
+    @Override
+    public String readString(String prompt) {
+        printLine(prompt);
+        return in.nextLine();
     }
 }

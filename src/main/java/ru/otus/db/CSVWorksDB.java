@@ -11,12 +11,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
 import ru.otus.model.Work;
 
+@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 public class CSVWorksDB implements WorksDB {
 
     private final Logger log = LoggerFactory.getLogger(CSVWorksDB.class);
     private final Resource resource;
 
-    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     public CSVWorksDB(Resource resource) {
         this.resource = resource;
     }
