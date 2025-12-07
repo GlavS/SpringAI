@@ -9,11 +9,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.io.ClassPathResource;
-import ru.otus.console.ConsoleIOService;
 import ru.otus.db.CSVWorksDB;
 import ru.otus.menu.ConsoleMenuDisplayService;
 import ru.otus.menu.commands.ShowRepertoireCommand;
-import ru.otus.menu.commands.WorkByComposerCommand;
 import ru.otus.model.Work;
 
 public class Runner {
@@ -59,6 +57,4 @@ public class Runner {
         ShowRepertoireCommand showRepertoireCommand = context.getBean(ShowRepertoireCommand.class);
         showRepertoireCommand.execute();
     }
-
-
 }

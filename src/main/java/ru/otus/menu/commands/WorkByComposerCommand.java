@@ -1,11 +1,10 @@
 package ru.otus.menu.commands;
 
+import java.util.List;
 import ru.otus.console.IOService;
 import ru.otus.menu.Command;
 import ru.otus.model.Work;
 import ru.otus.repository.WorkRepository;
-
-import java.util.List;
 
 public class WorkByComposerCommand implements Command {
 
