@@ -1,6 +1,5 @@
 package ru.otus.menu.commands;
 
-import java.util.List;
 import ru.otus.console.IOService;
 import ru.otus.menu.Command;
 import ru.otus.model.Difficulty;
@@ -24,10 +23,9 @@ public class AddWorkCommand implements Command {
             ioService.printLine("Error adding work to database");
             return;
         }
-        List<Work> workList = workRepository.getAll();
-        workList.add(work);
+        long newId = workRepository.addWork(work);
+        work.setId(newId);
         ioService.printLine("Added work to database: " + work);
-        workList.forEach(w -> ioService.printLine(w.toString()));
     }
 
     private Work readWorkFromConsole() {
@@ -39,12 +37,12 @@ public class AddWorkCommand implements Command {
         Difficulty difficulty;
         try {
             difficulty = Difficulty.valueOf(difficultyString.toUpperCase());
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException _) {
             ioService.printLine("Invalid difficulty: " + difficultyString);
             ioService.printLine("Next time enter difficulty (EASY, MEDIUM, HARD, VERY_HARD)");
             return null;
         }
-        long id = workRepository.getAll().size() + 1;
+        long id = (long) workRepository.getAll().size() + 1;
         work.setId(id);
         work.setComposer(composerName);
         work.setTitle(title);

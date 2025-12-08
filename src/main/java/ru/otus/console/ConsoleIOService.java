@@ -5,6 +5,7 @@ import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
+@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 public class ConsoleIOService implements IOService {
     private final PrintStream out;
     private final Scanner in;
@@ -26,7 +27,7 @@ public class ConsoleIOService implements IOService {
         int choiceInt;
         try {
             choiceInt = Integer.parseInt(choice.trim());
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException _) {
             printLine("Введите число");
             return 0;
         }

@@ -69,11 +69,6 @@
         <constructor-arg ref="stdout"/>
     </bean>
 
-    <bean id="consoleDisplayService" class="ru.otus.menu.ConsoleMenuDisplayService">
-        <constructor-arg ref="menu"/>
-        <constructor-arg ref="ioService"/>
-    </bean>
-
     <bean id="workRepository" class="ru.otus.repository.WorkRepositoryImpl">
         <constructor-arg ref="db"/>
     </bean>

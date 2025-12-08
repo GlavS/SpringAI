@@ -6,6 +6,7 @@ plugins {
     application
     id("com.diffplug.spotless") version "6.25.0"
     id("com.gradleup.shadow") version "8.3.9"
+    id ("name.remal.sonarlint") version "7.0.0"
 }
 java {
     toolchain {
@@ -64,4 +65,8 @@ tasks.withType<ShadowJar> {
 
 tasks.withType<JavaExec> {
     standardInput = System.`in`
+}
+
+sonarLint {
+    ignoredPaths.add("src/test/java/Runner.java")
 }

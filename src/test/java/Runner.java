@@ -11,7 +11,6 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.io.ClassPathResource;
 import ru.otus.console.IOService;
 import ru.otus.db.CSVWorksDB;
-import ru.otus.menu.ConsoleMenuDisplayService;
 import ru.otus.menu.Menu;
 import ru.otus.menu.MenuItem;
 import ru.otus.menu.commands.ShowRepertoireCommand;
@@ -45,13 +44,6 @@ public class Runner {
             throw new RuntimeException(e);
         }
         System.out.println(works);
-    }
-
-    @Test
-    void displayMenu() {
-        ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
-        ConsoleMenuDisplayService consoleMenuDisplayService = context.getBean(ConsoleMenuDisplayService.class);
-        consoleMenuDisplayService.displayMenu();
     }
 
     @Test

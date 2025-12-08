@@ -34,7 +34,7 @@ public class ApplicationRunner {
                         .findFirst()
                         .orElse(null);
                 if (menuItem == null) {
-                    throw new RuntimeException("Menu item not found, error");
+                    throw new MenuItemNotFoundException("Menu item not found, error");
                 }
                 Command command = menuItem.command();
                 command.execute();

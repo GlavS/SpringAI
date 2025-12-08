@@ -42,7 +42,7 @@ public class WorkRepositoryImpl implements WorkRepository {
     @Override
     public long addWork(Work work) {
         List<Work> works = db.getDB();
-        long id = works.size() + 1;
+        long id = (long) works.size() + 1;
         work.setId(id);
         works.add(work);
         return id;

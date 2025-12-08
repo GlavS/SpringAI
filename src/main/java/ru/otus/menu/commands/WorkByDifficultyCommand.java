@@ -23,7 +23,7 @@ public class WorkByDifficultyCommand implements Command {
         Difficulty difficulty;
         try {
             difficulty = Difficulty.valueOf(difficultyString);
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException _) {
             ioService.printLine("Invalid difficulty: " + difficultyString);
             ioService.printLine("Next time enter difficulty (EASY, MEDIUM, HARD, VERY_HARD)");
             return;

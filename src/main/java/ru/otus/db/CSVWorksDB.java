@@ -6,15 +6,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.List;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
 import ru.otus.model.Work;
 
 @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 public class CSVWorksDB implements WorksDB {
 
-    private final Logger log = LoggerFactory.getLogger(CSVWorksDB.class);
     private final Resource resource;
 
     public CSVWorksDB(Resource resource) {
@@ -31,8 +28,7 @@ public class CSVWorksDB implements WorksDB {
                     .build();
             works = csvToBean.parse();
         } catch (IOException e) {
-            log.error(e.getMessage(), e);
-            throw new RuntimeException(e);
+            throw new ResourceReaderCreationException(e.getMessage(), e);
         }
         return works;
     }
