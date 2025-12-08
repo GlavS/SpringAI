@@ -16,7 +16,10 @@
         <constructor-arg ref="workRepository"/>
         <constructor-arg ref="ioService"/>
     </bean>
-    <bean id="addWork" class="ru.otus.menu.commands.AddWorkCommand"/>
+    <bean id="addWork" class="ru.otus.menu.commands.AddWorkCommand">
+        <constructor-arg ref="workRepository"/>
+        <constructor-arg ref="ioService"/>
+    </bean>
     <bean id="exitCommand" class="ru.otus.menu.commands.ExitCommand"/>
 <!---->
     <bean id="menu" class="ru.otus.menu.Menu">
