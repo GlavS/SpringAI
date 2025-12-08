@@ -3,6 +3,7 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
   https://www.springframework.org/schema/beans/spring-beans.xsd">
+
 <!--Команды меню-->
     <bean id="showRepertoire" class="ru.otus.menu.commands.ShowRepertoireCommand">
         <constructor-arg ref="workRepository"/>
@@ -20,35 +21,30 @@
         <constructor-arg ref="workRepository"/>
         <constructor-arg ref="ioService"/>
     </bean>
-    <bean id="exitCommand" class="ru.otus.menu.commands.ExitCommand"/>
 <!---->
+
     <bean id="menu" class="ru.otus.menu.Menu">
         <constructor-arg>
             <list>
                 <bean class="ru.otus.menu.MenuItem">
                     <constructor-arg value="1"/>
-                    <constructor-arg value="Показать весь репертуар"/>
+                    <constructor-arg value="Show entire repertoire"/>
                     <constructor-arg ref="showRepertoire"/>
                 </bean>
                 <bean class="ru.otus.menu.MenuItem">
                     <constructor-arg value="2"/>
-                    <constructor-arg value="Показать произведения по композитору"/>
+                    <constructor-arg value="Show works by composer"/>
                     <constructor-arg ref="workByComposer"/>
                 </bean>
                 <bean class="ru.otus.menu.MenuItem">
                     <constructor-arg value="3"/>
-                    <constructor-arg value="Показать произведения по уровню сложности"/>
+                    <constructor-arg value="Show works by difficulty"/>
                     <constructor-arg ref="workByDifficulty"/>
                 </bean>
                 <bean class="ru.otus.menu.MenuItem">
                     <constructor-arg value="4"/>
-                    <constructor-arg value="Добавить произведение"/>
+                    <constructor-arg value="Add work"/>
                     <constructor-arg ref="addWork"/>
-                </bean>
-                <bean class="ru.otus.menu.MenuItem">
-                    <constructor-arg value="5"/>
-                    <constructor-arg value="Выйти"/>
-                    <constructor-arg ref="exitCommand"/>
                 </bean>
             </list>
         </constructor-arg>
@@ -80,6 +76,11 @@
 
     <bean id="workRepository" class="ru.otus.repository.WorkRepositoryImpl">
         <constructor-arg ref="db"/>
+    </bean>
+
+    <bean id="applicationRunner" class="ru.otus.application.ApplicationRunner">
+        <constructor-arg ref="menu"/>
+        <constructor-arg ref="ioService"/>
     </bean>
 
 </beans>

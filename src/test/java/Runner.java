@@ -9,8 +9,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.io.ClassPathResource;
+import ru.otus.console.IOService;
 import ru.otus.db.CSVWorksDB;
 import ru.otus.menu.ConsoleMenuDisplayService;
+import ru.otus.menu.Menu;
+import ru.otus.menu.MenuItem;
 import ru.otus.menu.commands.ShowRepertoireCommand;
 import ru.otus.model.Work;
 
@@ -56,5 +59,15 @@ public class Runner {
         ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
         ShowRepertoireCommand showRepertoireCommand = context.getBean(ShowRepertoireCommand.class);
         showRepertoireCommand.execute();
+    }
+
+    @Test
+    void printMenu() {
+        ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+        Menu menu = context.getBean(Menu.class);
+        IOService ioService = context.getBean(IOService.class);
+        List<MenuItem> menuItems = menu.menuItems();
+        menuItems.forEach(item -> ioService.printLineFormatted("%s. %s%n", item.id(), item.name()));
+        ioService.printLine("5. Exit program");
     }
 }
