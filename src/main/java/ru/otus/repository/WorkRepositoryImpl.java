@@ -43,8 +43,10 @@ public class WorkRepositoryImpl implements WorkRepository {
     public long addWork(Work work) {
         List<Work> works = db.getDB();
         long id = (long) works.size() + 1;
-        work.setId(id);
-        works.add(work);
+        Work dto =
+                new Work(work.getId(), work.getComposer(), work.getTitle(), work.getInstrument(), work.getDifficulty());
+        dto.setId(id);
+        works.add(dto);
         return id;
     }
 }
