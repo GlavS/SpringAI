@@ -22,13 +22,13 @@ public class ConsoleIOService implements IOService {
 
     @Override
     public int readMenuChoice() {
-        out.println("Введите пункт меню: ");
+        out.println("Enter menu choice: ");
         String choice = in.nextLine();
         int choiceInt;
         try {
             choiceInt = Integer.parseInt(choice.trim());
         } catch (NumberFormatException _) {
-            printLine("Введите число");
+            printLine("Please enter a number, corresponding to menu choice");
             return 0;
         }
         return choiceInt;
