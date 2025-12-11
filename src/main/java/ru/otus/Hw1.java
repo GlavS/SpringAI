@@ -10,7 +10,7 @@ public class Hw1 {
         throw new IllegalStateException("Main entry class");
     }
 
-    static void main(String[] args) {
+    public static void main(String[] args) {
         ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
         ApplicationRunner runner = context.getBean(ApplicationRunner.class);
         runner.run();

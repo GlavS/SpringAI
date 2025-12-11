@@ -32,15 +32,18 @@ public class InMemoryWorkDb implements WorkDb {
 
     @Override
     public Work save(Work work) {
-        if (Objects.isNull(work) || Objects.isNull(work.getId())) {
-            throw new InMemoryWorkDbException("Work object or its ID cannot be null");
-        } else if (modifableDb.stream().anyMatch(w -> w.getId().equals(work.getId()))) {
-            modifableDb.removeIf(w -> w.getId().equals(work.getId()));
-            modifableDb.add(work);
-        } else {
+        if (Objects.isNull(work)) {
+            throw new InMemoryWorkDbException("Work object cannot be null");
+        }
+
+        if (work.getId() == 0L || work.getId() == null) {
             work.setId(idSequence.incrementAndGet());
             modifableDb.add(work);
+            return work;
         }
+
+        modifableDb.removeIf(w -> w.getId().equals(work.getId()));
+        modifableDb.add(work);
         return work;
     }
 

@@ -23,8 +23,7 @@ public class AddWorkCommand implements Command {
             ioService.printLine("Error adding work to database");
             return;
         }
-        long newId = workRepository.addWork(work);
-        work.setId(newId);
+        workRepository.addWork(work);
         ioService.printLine("Added work to database: " + work);
     }
 
@@ -42,8 +41,7 @@ public class AddWorkCommand implements Command {
             ioService.printLine("Next time enter difficulty (EASY, MEDIUM, HARD, VERY_HARD)");
             return null;
         }
-        long id = (long) workRepository.getAll().size() + 1;
-        work.setId(id);
+        work.setId(0L);
         work.setComposer(composerName);
         work.setTitle(title);
         work.setInstrument(instrument);

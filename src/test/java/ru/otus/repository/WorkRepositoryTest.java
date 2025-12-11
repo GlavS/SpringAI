@@ -28,7 +28,7 @@ class WorkRepositoryTest {
     @Test
     void repositoryGetAllMethodShouldReturnAllWorks() {
         List<Work> allWorks = workRepository.getAll();
-        assertThat(allWorks).usingRecursiveAssertion().isEqualTo(resultList);
+        assertThat(allWorks).usingRecursiveComparison().isEqualTo(resultList);
     }
 
     @Test
@@ -41,13 +41,13 @@ class WorkRepositoryTest {
     @Test
     void repositoryGetByComposerMethodShouldReturnExpectedListOfWorks() {
         List<Work> allWorks = workRepository.getByComposer("testName");
-        assertThat(allWorks).usingRecursiveAssertion().isEqualTo(resultList);
+        assertThat(allWorks).usingRecursiveComparison().isEqualTo(resultList);
     }
 
     @Test
     void repositoryGetByDifficultyMethodShouldReturnExpectedListOfWorks() {
         List<Work> allWorks = workRepository.getByDifficulty(Difficulty.EASY);
-        assertThat(allWorks).usingRecursiveAssertion().isEqualTo(resultList);
+        assertThat(allWorks).usingRecursiveComparison().isEqualTo(resultList);
     }
 
     @Test
