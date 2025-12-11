@@ -1,6 +1,7 @@
 package ru.otus.db;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -51,6 +52,11 @@ class InMemoryWorkDbTest {
         workDb.save(newWork);
         assertThat(workDb.findAll()).hasSize(3);
         assertThat(workDb.findById(3L)).isPresent().contains(newResultWork);
+
+        Work newWorkForUpdate = new Work(3L, "Test4 Name4", "TestWork3", "TestInstrument3", Difficulty.MEDIUM);
+        workDb.save(newWorkForUpdate);
+        Optional<Work> updatedWork = workDb.findById(3L);
+        assertThat(updatedWork).contains(newWorkForUpdate);
     }
 
     @Test

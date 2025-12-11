@@ -22,7 +22,7 @@ public class ApplicationRunner {
         ioService.printLine("Repertoire library v. 0.1\n\n");
         while (programIsRunning) {
             menuItems.forEach(item -> ioService.printLineFormatted("%s. %s%n", item.id(), item.name()));
-            ioService.printLine("5. Exit program");
+            ioService.printLine(exitCommandNumber + ". Exit program");
             int choice = ioService.readMenuChoice();
             if (choice > exitCommandNumber || choice < 1) {
                 ioService.printLine("Invalid choice, please try again");
