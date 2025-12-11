@@ -41,7 +41,6 @@ public class AddWorkCommand implements Command {
             ioService.printLine("Next time enter difficulty (EASY, MEDIUM, HARD, VERY_HARD)");
             return null;
         }
-        work.setId(0L);
         work.setComposer(composerName);
         work.setTitle(title);
         work.setInstrument(instrument);

@@ -36,7 +36,7 @@ public class InMemoryWorkDb implements WorkDb {
             throw new InMemoryWorkDbException("Work object cannot be null");
         }
 
-        if (work.getId() == 0L || work.getId() == null) {
+        if (work.getId() == null) {
             work.setId(idSequence.incrementAndGet());
             modifableDb.add(work);
             return work;

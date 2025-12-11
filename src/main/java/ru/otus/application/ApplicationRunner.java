@@ -7,8 +7,6 @@ import ru.otus.menu.Menu;
 import ru.otus.menu.MenuItem;
 
 public class ApplicationRunner {
-    private static final int MENU_ITEMS_COUNT = 5;
-    private static final int EXIT_COMMAND_NUMBER = MENU_ITEMS_COUNT;
     private final Menu menu;
     private final IOService ioService;
 
@@ -20,14 +18,15 @@ public class ApplicationRunner {
     public void run() {
         boolean programIsRunning = true;
         List<MenuItem> menuItems = menu.menuItems();
+        final int exitCommandNumber = menuItems.size() + 1;
         ioService.printLine("Repertoire library v. 0.1\n\n");
         while (programIsRunning) {
             menuItems.forEach(item -> ioService.printLineFormatted("%s. %s%n", item.id(), item.name()));
             ioService.printLine("5. Exit program");
             int choice = ioService.readMenuChoice();
-            if (choice > MENU_ITEMS_COUNT || choice < 1) {
+            if (choice > exitCommandNumber || choice < 1) {
                 ioService.printLine("Invalid choice, please try again");
-            } else if (choice == EXIT_COMMAND_NUMBER) {
+            } else if (choice == exitCommandNumber) {
                 programIsRunning = false;
             } else {
                 MenuItem menuItem = menuItems.stream()
