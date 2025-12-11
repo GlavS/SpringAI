@@ -1,1 +1,2 @@
-rootProject.name = "HW1"
+rootProject.name = "Mini-Otus"
+include("hw01-spring-core-xml")
