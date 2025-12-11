@@ -5,7 +5,6 @@ import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
-@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 public class ConsoleIOService implements IOService {
     private final PrintStream out;
     private final Scanner in;
@@ -22,7 +21,7 @@ public class ConsoleIOService implements IOService {
 
     @Override
     public int readMenuChoice() {
-        out.println("Enter menu choice: ");
+        out.println("Enter menu choice:");
         String choice = in.nextLine();
         int choiceInt;
         try {

@@ -9,7 +9,7 @@ import ru.otus.menu.MenuItem;
 public class ApplicationRunner {
     private final Menu menu;
     private final IOService ioService;
-    boolean programIsRunning = true;
+    private boolean programIsRunning = true;
 
     public ApplicationRunner(Menu menu, IOService ioService) {
         this.menu = menu;
@@ -24,8 +24,7 @@ public class ApplicationRunner {
             ioService.printLine("5. Exit program");
             int choice = ioService.readMenuChoice();
             if (choice > 5 || choice < 1) {
-                ioService.printLine("Invalid choice");
-                programIsRunning = false;
+                ioService.printLine("Invalid choice, please try again");
             } else if (choice == 5) {
                 programIsRunning = false;
             } else {

@@ -5,6 +5,7 @@ import com.opencsv.bean.CsvToBeanBuilder;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import org.springframework.core.io.Resource;
 import ru.otus.db.ResourceReaderCreationException;
@@ -20,14 +21,14 @@ public class CsvParserImpl implements CsvParser {
     @Override
     public List<Work> parse() {
         List<Work> works;
-        try (Reader reader = new InputStreamReader(resource.getInputStream())) {
+        try (Reader reader = new InputStreamReader(resource.getInputStream(), StandardCharsets.UTF_8)) {
             CsvToBean<Work> csvToBean = new CsvToBeanBuilder<Work>(reader)
                     .withType(Work.class)
                     .withSeparator(';')
                     .build();
             works = csvToBean.parse();
         } catch (IOException e) {
-            throw new ResourceReaderCreationException(e.getMessage(), e);
+            throw new ResourceReaderCreationException("Cannot read CSV file", e);
         }
         return List.copyOf(works);
     }
