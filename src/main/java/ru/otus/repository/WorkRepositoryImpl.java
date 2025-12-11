@@ -1,52 +1,48 @@
 package ru.otus.repository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import ru.otus.db.WorksDB;
+import ru.otus.db.WorkDb;
 import ru.otus.model.Difficulty;
 import ru.otus.model.Work;
 
 @SuppressWarnings("unused")
 public class WorkRepositoryImpl implements WorkRepository {
 
-    private final WorksDB db;
+    private final WorkDb db;
 
-    public WorkRepositoryImpl(WorksDB db) {
+    public WorkRepositoryImpl(WorkDb db) {
         this.db = db;
     }
 
     @Override
     public List<Work> getAll() {
-        return db.getDB();
+        return new ArrayList<>(db.findAll());
     }
 
     @Override
     public Optional<Work> getById(long id) {
-        return db.getDB().stream().filter(work -> work.getId() == id).findFirst();
+        return db.findById(id);
     }
 
     @Override
     public List<Work> getByComposer(String composerSurname) {
-        return db.getDB().stream()
+        return db.findAll().stream()
                 .filter(work -> work.getComposer().contains(composerSurname))
                 .toList();
     }
 
     @Override
     public List<Work> getByDifficulty(Difficulty difficulty) {
-        return db.getDB().stream()
+        return db.findAll().stream()
                 .filter(work -> work.getDifficulty() == difficulty)
                 .toList();
     }
 
     @Override
     public long addWork(Work work) {
-        List<Work> works = db.getDB();
-        long id = (long) works.size() + 1;
-        Work dto =
-                new Work(work.getId(), work.getComposer(), work.getTitle(), work.getInstrument(), work.getDifficulty());
-        dto.setId(id);
-        works.add(dto);
-        return id;
+        db.save(work);
+        return work.getId();
     }
 }

@@ -50,8 +50,12 @@
         </constructor-arg>
     </bean>
 
-    <bean id="db" class="ru.otus.db.CSVWorksDB">
+    <bean id="parser" class="ru.otus.csvparser.CsvParserImpl">
         <constructor-arg value="classpath:repertoire.csv"/>
+    </bean>
+
+    <bean id="db" class="ru.otus.db.InMemoryWorkDb">
+        <constructor-arg ref="parser"/>
     </bean>
 
 <!-- Два специальных бина для IOService   ________________________________________________________________-->

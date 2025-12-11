@@ -1,35 +1,34 @@
 package ru.otus.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ru.otus.db.WorksDB;
+import ru.otus.db.WorkDb;
 import ru.otus.model.Difficulty;
 import ru.otus.model.Work;
 
 class WorkRepositoryTest {
 
-    private final WorksDB worksDB = mock(WorksDB.class);
-    private final WorkRepository workRepository = new WorkRepositoryImpl(worksDB);
-    private final List<Work> db = new ArrayList<>();
+    private final WorkDb workDb = mock(WorkDb.class);
+    private final WorkRepository workRepository = new WorkRepositoryImpl(workDb);
+    private final Work resultWork = new Work(42L, "testName", "testTitle", "testInstrument", Difficulty.EASY);
+    private final List<Work> resultList = List.of(resultWork);
+    private final List<Work> works = List.of(resultWork);
 
     @BeforeEach
     void setUp() {
-        when(worksDB.getDB()).thenReturn(db);
-        Work workForTestDb = new Work(42L, "testName", "testTitle", "testInstrument", Difficulty.EASY);
-        db.add(workForTestDb);
+        when(workDb.findAll()).thenReturn(works);
+        when(workDb.findById(42L)).thenReturn(Optional.of(resultWork));
     }
 
     @Test
     void repositoryGetAllMethodShouldReturnAllWorks() {
-        List<Work> works = workRepository.getAll();
-        assertThat(works).usingRecursiveAssertion().isEqualTo(db);
+        List<Work> allWorks = workRepository.getAll();
+        assertThat(allWorks).usingRecursiveAssertion().isEqualTo(resultList);
     }
 
     @Test
@@ -41,21 +40,19 @@ class WorkRepositoryTest {
 
     @Test
     void repositoryGetByComposerMethodShouldReturnExpectedListOfWorks() {
-        List<Work> works = workRepository.getByComposer("testName");
-        assertThat(works).usingRecursiveAssertion().isEqualTo(db);
+        List<Work> allWorks = workRepository.getByComposer("testName");
+        assertThat(allWorks).usingRecursiveAssertion().isEqualTo(resultList);
     }
 
     @Test
     void repositoryGetByDifficultyMethodShouldReturnExpectedListOfWorks() {
-        List<Work> works = workRepository.getByDifficulty(Difficulty.EASY);
-        assertThat(works).usingRecursiveAssertion().isEqualTo(db);
+        List<Work> allWorks = workRepository.getByDifficulty(Difficulty.EASY);
+        assertThat(allWorks).usingRecursiveAssertion().isEqualTo(resultList);
     }
 
     @Test
-    void repositoryAddWorkMethodShouldReturnExpectedNewWorkId() {
-        Work workToAdd = db.getFirst();
-        long expectedId = (long) workRepository.getAll().size() + 1;
-        long newID = workRepository.addWork(workToAdd);
-        assertThat(newID).isEqualTo(expectedId);
+    void repositoryAddWorkMethodShouldWorkAsExpected() {
+        workRepository.addWork(resultWork);
+        verify(workDb, times(1)).save(resultWork);
     }
 }

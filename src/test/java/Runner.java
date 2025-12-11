@@ -10,7 +10,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.io.ClassPathResource;
 import ru.otus.console.IOService;
-import ru.otus.db.CSVWorksDB;
+import ru.otus.csvparser.CsvParser;
 import ru.otus.menu.Menu;
 import ru.otus.menu.MenuItem;
 import ru.otus.menu.commands.ShowRepertoireCommand;
@@ -22,8 +22,8 @@ public class Runner {
     public void testRunApplication() {
 
         ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
-        CSVWorksDB csvWorksDB = context.getBean(CSVWorksDB.class);
-        List<Work> works = csvWorksDB.getDB();
+        CsvParser csvParser = (CsvParser) context.getBean("parser");
+        List<Work> works = csvParser.parse();
         System.out.println(works);
     }
 
