@@ -8,9 +8,11 @@ application {
 
 dependencies {
     implementation("org.springframework:spring-context:7.0.1")
-    implementation("org.slf4j:slf4j-api:2.0.13")
     implementation("ch.qos.logback:logback-classic:1.5.21")
-    implementation("com.opencsv:opencsv:5.12.0")
+    implementation("com.opencsv:opencsv:5.12.0") {
+        exclude(group = "org.apache.commons", module = "commons-lang3")
+    }
+    implementation("org.apache.commons:commons-lang3:3.18.0")
 }
 
 sonarLint {

@@ -13,13 +13,13 @@ plugins {
 group = "ru.otus"
 version = "1.0-SNAPSHOT"
 
-allprojects {
+
+subprojects {
+
     repositories {
         mavenCentral()
     }
-}
 
-subprojects {
     apply(plugin = "java")
     apply(plugin = "com.diffplug.spotless")
     apply(plugin = "com.gradleup.shadow")
@@ -30,15 +30,24 @@ subprojects {
     }
 
     dependencies {
-        add("testImplementation", platform("org.junit:junit-bom:5.10.0"))
+        add("testImplementation", platform("org.junit:junit-bom:5.13.4"))
         add("testImplementation", "org.junit.jupiter:junit-jupiter")
         add("testRuntimeOnly", "org.junit.platform:junit-platform-launcher")
 
         add("testImplementation", "org.mockito:mockito-junit-jupiter:5.20.0")
         add("testImplementation", "org.assertj:assertj-core:3.27.6")
+
+
     }
 
-
+    configurations.configureEach {
+        resolutionStrategy {
+            failOnVersionConflict()
+            if (name.startsWith("spotless")) {
+                force("com.google.guava:guava:33.4.8-jre")
+            }                                                                              // for palantir-java-format
+        }
+    }
 
     tasks.withType<Test> {
         useJUnitPlatform()
