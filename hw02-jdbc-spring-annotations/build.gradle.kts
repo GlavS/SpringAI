@@ -7,6 +7,8 @@ application {
 }
 
 dependencies {
-    implementation("org.springframework:spring-context:7.0.1")
+    implementation("org.springframework:spring-context")
+    implementation("org.springframework:spring-jdbc")
+    implementation("org.springframework:spring-tx")
     implementation("ch.qos.logback:logback-classic:1.5.21")
 }

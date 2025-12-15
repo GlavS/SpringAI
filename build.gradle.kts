@@ -30,6 +30,8 @@ subprojects {
     }
 
     dependencies {
+        add("implementation", platform("org.springframework:spring-framework-bom:7.0.1" ))
+
         add("testImplementation", platform("org.junit:junit-bom:5.13.4"))
         add("testImplementation", "org.junit.jupiter:junit-jupiter")
         add("testRuntimeOnly", "org.junit.platform:junit-platform-launcher")
