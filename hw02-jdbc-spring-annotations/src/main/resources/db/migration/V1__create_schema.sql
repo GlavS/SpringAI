@@ -38,11 +38,11 @@ CREATE TABLE hw2.work
 
     CONSTRAINT fk_work_composer
         FOREIGN KEY (composer_id)
-            REFERENCES public.composer (composer_id)
+            REFERENCES hw2.composer (composer_id)
             ON DELETE RESTRICT,
 
     CONSTRAINT fk_work_instrument
         FOREIGN KEY (instrument_id)
-            REFERENCES public.instrument (instrument_id)
+            REFERENCES hw2.instrument (instrument_id)
             ON DELETE RESTRICT
 );

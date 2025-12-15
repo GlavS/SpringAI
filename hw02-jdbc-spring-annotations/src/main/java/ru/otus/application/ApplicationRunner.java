@@ -1,24 +1,58 @@
 package ru.otus.application;
 
+import static ru.otus.utility.AppPropsUtility.getParam;
+
+import javax.sql.DataSource;
 import org.flywaydb.core.Flyway;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ApplicationRunner {
 
+    private static final String CLEAN = "clean";
     private final Logger log = LoggerFactory.getLogger(ApplicationRunner.class);
-    private final Flyway flyway;
+    private final Environment env;
+    private final DataSource dataSource;
 
-    public ApplicationRunner(Flyway flyway) {
-        this.flyway = flyway;
+    public ApplicationRunner(Environment env, DataSource dataSource) {
+        this.env = env;
+        this.dataSource = dataSource;
     }
 
     public void run() {
         log.debug("Application runner ready");
-        log.debug("Flyway migration started...");
-        flyway.migrate();
-        log.debug("Flyway migration complete");
+        migrateSelectedMode();
+    }
+
+    private void migrateSelectedMode() {
+        boolean cleaningIsActive = getParam(env, "hw2.mode", "No mode param found in application properties")
+                .equals(CLEAN);
+        Flyway flyway = Flyway.configure()
+                .dataSource(dataSource)
+                .schemas("hw2")
+                .defaultSchema("hw2")
+                .locations("classpath:db/migration")
+                .cleanDisabled(true)
+                .load();
+        if (cleaningIsActive) {
+            Flyway flywayReset = Flyway.configure()
+                    .dataSource(dataSource)
+                    .schemas("hw2")
+                    .defaultSchema("hw2")
+                    .locations("classpath:db/migration")
+                    .cleanDisabled(false)
+                    .load();
+            log.debug("Flyway cleaning migration started...");
+            flywayReset.clean();
+            flywayReset.migrate();
+            log.debug("Flyway cleaning migration complete");
+        } else {
+            log.debug("Flyway migration started...");
+            flyway.migrate();
+            log.debug("Flyway migration complete");
+        }
     }
 }
