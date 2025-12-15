@@ -1,7 +1,5 @@
 package ru.otus.application;
 
-import static ru.otus.utility.AppPropsUtility.getParam;
-
 import javax.sql.DataSource;
 import org.flywaydb.core.Flyway;
 import org.slf4j.Logger;
@@ -10,14 +8,14 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ApplicationRunner {
+public class Hw2ApplicationRunner {
 
     private static final String CLEAN = "clean";
-    private final Logger log = LoggerFactory.getLogger(ApplicationRunner.class);
+    private final Logger log = LoggerFactory.getLogger(Hw2ApplicationRunner.class);
     private final Environment env;
     private final DataSource dataSource;
 
-    public ApplicationRunner(Environment env, DataSource dataSource) {
+    public Hw2ApplicationRunner(Environment env, DataSource dataSource) {
         this.env = env;
         this.dataSource = dataSource;
     }
@@ -28,8 +26,10 @@ public class ApplicationRunner {
     }
 
     private void migrateSelectedMode() {
-        boolean cleaningIsActive = getParam(env, "hw2.mode", "No mode param found in application properties")
-                .equals(CLEAN);
+        boolean cleaningIsActive;
+        String mode = env.getProperty("hw2.mode");
+        cleaningIsActive = mode != null && mode.equals(CLEAN);
+
         Flyway flyway = Flyway.configure()
                 .dataSource(dataSource)
                 .schemas("hw2")
@@ -50,9 +50,9 @@ public class ApplicationRunner {
             flywayReset.migrate();
             log.debug("Flyway cleaning migration complete");
         } else {
-            log.debug("Flyway migration started...");
+            log.debug("Flyway normal migration started...");
             flyway.migrate();
-            log.debug("Flyway migration complete");
+            log.debug("Flyway normal migration complete");
         }
     }
 }
