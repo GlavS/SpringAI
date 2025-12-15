@@ -28,7 +28,8 @@ public class Hw2ApplicationRunner {
     private void migrateSelectedMode() {
         boolean cleaningIsActive;
         String mode = env.getProperty("hw2.mode");
-        cleaningIsActive = mode != null && mode.equals(CLEAN);
+        log.debug("Current flyway mode: {}", mode);
+        cleaningIsActive = mode != null && mode.equalsIgnoreCase(CLEAN);
 
         Flyway flyway = Flyway.configure()
                 .dataSource(dataSource)
