@@ -1,0 +1,15 @@
+package ru.otus.dao;
+
+import java.util.List;
+import java.util.Optional;
+import ru.otus.model.Work;
+
+public interface WorkDao {
+    List<Work> findAll();
+
+    Optional<Work> findById(long id);
+
+    Work save(Work work);
+
+    void delete(Work work);
+}
