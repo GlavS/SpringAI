@@ -31,12 +31,22 @@ subprojects {
 
     configurations.configureEach {
         resolutionStrategy {
-            failOnVersionConflict()
-            if (name.startsWith("spotless")) {
+            // Строгость — только для "боевых" конфигураций
+            val relaxed = name.startsWith("test", ignoreCase = true) ||
+                    name.startsWith("spotless", ignoreCase = true) ||
+                    name.contains("sonarlint", ignoreCase = true)
+
+            if (!relaxed) {
+                failOnVersionConflict()
+            }
+
+            // Spotless-пин (как у тебя было)
+            if (name.startsWith("spotless", ignoreCase = true)) {
                 force("com.google.guava:guava:33.4.8-jre")
-            }                                                                              // for palantir-java-format
+            }
         }
     }
+
 
     tasks.withType<Test> {
         useJUnitPlatform()

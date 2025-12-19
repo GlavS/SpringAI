@@ -10,7 +10,8 @@ dependencies {
     // Spring BOM (теперь живёт в модуле)
     implementation(platform("org.springframework:spring-framework-bom:7.0.1"))
     // Тестовый стек (теперь живёт в модуле)
-    testImplementation(platform("org.junit:junit-bom:5.13.4"))
+//    testImplementation(platform("org.junit:junit-bom:5.13.4"))
+    testImplementation(platform("org.junit:junit-bom:6.0.1"))
 
     implementation("org.springframework:spring-context")
     implementation("org.springframework:spring-jdbc")
@@ -21,10 +22,19 @@ dependencies {
     implementation("org.flywaydb:flyway-database-postgresql:11.19.0")
     implementation("org.postgresql:postgresql:42.7.8")
 
-
+    testImplementation("org.springframework:spring-test")
     testImplementation("org.junit.jupiter:junit-jupiter")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
     testImplementation("org.mockito:mockito-junit-jupiter:5.20.0")
     testImplementation("org.assertj:assertj-core:3.27.6")
+
+    testImplementation("org.testcontainers:testcontainers:2.0.2")
+    testImplementation("org.testcontainers:testcontainers-junit-jupiter:2.0.2")
+    // https://mvnrepository.com/artifact/org.testcontainers/postgresql
+    testImplementation("org.testcontainers:postgresql:1.21.3")
+
+    sonarLint {
+        ignoredPaths.add("src/test/**")
+    }
 }
