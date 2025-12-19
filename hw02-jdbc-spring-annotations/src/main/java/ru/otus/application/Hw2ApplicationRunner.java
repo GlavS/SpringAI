@@ -35,7 +35,7 @@ public class Hw2ApplicationRunner {
                 .dataSource(dataSource)
                 .schemas("hw2")
                 .defaultSchema("hw2")
-                .locations("classpath:db/migration")
+                .locations("classpath:db/migration", "classpath:db/seed")
                 .cleanDisabled(true)
                 .load();
         if (cleaningIsActive) {
@@ -43,7 +43,7 @@ public class Hw2ApplicationRunner {
                     .dataSource(dataSource)
                     .schemas("hw2")
                     .defaultSchema("hw2")
-                    .locations("classpath:db/migration")
+                    .locations("classpath:db/migration", "classpath:db/seed")
                     .cleanDisabled(false)
                     .load();
             log.debug("Flyway cleaning migration started...");
