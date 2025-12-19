@@ -29,19 +29,6 @@ subprojects {
         toolchain.languageVersion.set(JavaLanguageVersion.of(25))
     }
 
-    dependencies {
-        add("implementation", platform("org.springframework:spring-framework-bom:7.0.1" ))
-
-        add("testImplementation", platform("org.junit:junit-bom:5.13.4"))
-        add("testImplementation", "org.junit.jupiter:junit-jupiter")
-        add("testRuntimeOnly", "org.junit.platform:junit-platform-launcher")
-
-        add("testImplementation", "org.mockito:mockito-junit-jupiter:5.20.0")
-        add("testImplementation", "org.assertj:assertj-core:3.27.6")
-
-
-    }
-
     configurations.configureEach {
         resolutionStrategy {
             failOnVersionConflict()
