@@ -47,7 +47,6 @@ subprojects {
         }
     }
 
-
     tasks.withType<Test> {
         useJUnitPlatform()
     }
@@ -71,4 +70,19 @@ subprojects {
         append("META-INF/spring.handlers")
         append("META-INF/spring.schemas")
     }
+
+    plugins.withId("java") {
+        tasks.withType<Test>().configureEach {
+            doFirst {
+                val mockitoCoreJar = classpath.files
+                    .firstOrNull { it.name.startsWith("mockito-core-") && it.name.endsWith(".jar") }
+
+                if (mockitoCoreJar != null) {
+                    // Добавляем агент прямо перед запуском JVM тестов
+                    jvmArgs("-javaagent:${mockitoCoreJar.absolutePath}")
+                }
+            }
+        }
+    }
+
 }

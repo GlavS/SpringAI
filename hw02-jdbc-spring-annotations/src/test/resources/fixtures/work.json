@@ -1,0 +1,36 @@
+{
+  "id" : 1,
+  "title" : "TestWorkTitle1",
+  "composer" : {
+    "id" : 1,
+    "name" : "TestComposerName1",
+    "surname" : "TestComposerSurname1",
+    "country" : "TestCountry1"
+  },
+  "instrument" : {
+    "id" : 1,
+    "name" : "Instrument1"
+  },
+  "genres" : [ {
+    "id" : 1,
+    "name" : "Genre1"
+  }, {
+    "id" : 2,
+    "name" : "Genre2"
+  } ],
+  "recordings" : [ {
+    "id" : 1,
+    "performer" : "TestPerformer1",
+    "label" : "TestLabel1",
+    "date" : 1577826000000,
+    "durationSec" : 180,
+    "sourceUrl" : "http://example.com/rec1"
+  }, {
+    "id" : 2,
+    "performer" : "TestPerformer2",
+    "label" : null,
+    "date" : 1612299600000,
+    "durationSec" : 210,
+    "sourceUrl" : null
+  } ]
+}

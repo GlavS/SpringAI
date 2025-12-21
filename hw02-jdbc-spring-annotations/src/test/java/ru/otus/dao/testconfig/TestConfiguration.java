@@ -1,5 +1,6 @@
 package ru.otus.dao.testconfig;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import javax.sql.DataSource;
 import org.flywaydb.core.Flyway;
 import org.springframework.context.annotation.Bean;
@@ -45,5 +46,10 @@ public class TestConfiguration {
     @Bean
     public NamedParameterJdbcOperations namedJdbc(DataSource ds) {
         return new NamedParameterJdbcTemplate(ds);
+    }
+
+    @Bean
+    public ObjectMapper objectMapper() {
+        return new ObjectMapper();
     }
 }

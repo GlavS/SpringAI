@@ -1,12 +1,9 @@
 package ru.otus.dao;
 
 import java.sql.Date;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.stereotype.Component;
 import ru.otus.model.*;
@@ -60,17 +57,17 @@ public class WorkDaoImpl implements WorkDao {
         WorkVo workVo = namedJdbc.queryForObject(
                 workSql,
                 idParam,
-                (rs, rn) -> new WorkVo(
+                (rs, _) -> new WorkVo(
                         rs.getLong(1),
                         rs.getString(2),
                         new Composer(rs.getLong(4), rs.getString(5), rs.getString(6), rs.getString(7)),
                         new Instrument(rs.getLong(8), rs.getString(9)),
                         rs.getString(3)));
-        List<Genre> genres = namedJdbc.query(genreSql, idParam, (rs, rn) -> new Genre(rs.getLong(1), rs.getString(2)));
+        List<Genre> genres = namedJdbc.query(genreSql, idParam, (rs, _) -> new Genre(rs.getLong(1), rs.getString(2)));
         List<Recording> recordings = namedJdbc.query(
                 recordingSql,
                 idParam,
-                (rs, rn) -> new Recording(
+                (rs, _) -> new Recording(
                         rs.getLong(1),
                         rs.getString(2),
                         rs.getString(3),
@@ -91,13 +88,6 @@ public class WorkDaoImpl implements WorkDao {
     public void delete(long id) {
         if (id == 0) throw new UnsupportedOperationException("parameter should not be zero TDD");
         throw new UnsupportedOperationException("delete TDD");
-    }
-
-    private static class WorkRowMapper implements RowMapper<Genre> {
-        @Override
-        public Genre mapRow(ResultSet rs, int rowNum) throws SQLException {
-            return new Genre(rs.getLong(1), rs.getString(2));
-        }
     }
 
     private record WorkVo(long work_id, String title, Composer composer, Instrument instrument, String difficulty) {}

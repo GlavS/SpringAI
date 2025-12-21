@@ -1,5 +1,9 @@
 package ru.otus.dao;
 
+import static org.assertj.core.api.Assertions.*;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.IOException;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +13,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import ru.otus.dao.testconfig.TestConfiguration;
@@ -24,6 +30,12 @@ class WorkDaoTest {
     @Autowired
     private Flyway flyway;
 
+    @Autowired
+    private ObjectMapper mapper;
+
+    @Autowired
+    private ResourceLoader resourceLoader;
+
     @BeforeEach
     void init() {
         flyway.clean();
@@ -36,9 +48,11 @@ class WorkDaoTest {
     }
 
     @Test
-    void findById() {
+    void findById() throws IOException {
+        Resource resource = resourceLoader.getResource("classpath:fixtures/work.json");
+        Work w = mapper.readValue(resource.getInputStream(), Work.class);
         Optional<Work> byId = dao.findById(1L);
-        System.out.println(byId);
+        assertThat(byId).isPresent().get().usingRecursiveComparison().isEqualTo(w);
     }
 
     @Test
