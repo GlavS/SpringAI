@@ -11,5 +11,5 @@ public interface WorkDao {
 
     Work save(Work work);
 
-    void delete(Work work);
+    void delete(long id);
 }
