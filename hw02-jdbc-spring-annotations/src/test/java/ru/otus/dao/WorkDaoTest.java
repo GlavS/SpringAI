@@ -48,11 +48,17 @@ class WorkDaoTest {
     }
 
     @Test
-    void findById() throws IOException {
-        Resource resource = resourceLoader.getResource("classpath:fixtures/work.json");
-        Work w = mapper.readValue(resource.getInputStream(), Work.class);
-        Optional<Work> byId = dao.findById(1L);
-        assertThat(byId).isPresent().get().usingRecursiveComparison().isEqualTo(w);
+    void findByIdShouldReturnCorrectEntity() throws IOException {
+        Resource resource = resourceLoader.getResource("classpath:fixtures/expected_work_1.json");
+        Work expected = mapper.readValue(resource.getInputStream(), Work.class);
+        Optional<Work> result = dao.findById(1L);
+        assertThat(result).isPresent().get().usingRecursiveComparison().isEqualTo(expected);
+    }
+
+    @Test
+    void findByIdShouldReturnOptionalEmptyInCaseOfNotFound() {
+        Optional<Work> result = dao.findById(142L);
+        assertThat(result).isEmpty();
     }
 
     @Test

@@ -4,6 +4,9 @@ import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.stereotype.Component;
 import ru.otus.model.*;
@@ -13,6 +16,7 @@ import ru.otus.model.*;
 public class WorkDaoImpl implements WorkDao {
 
     private final NamedParameterJdbcOperations namedJdbc;
+    private static final Logger log = LoggerFactory.getLogger(WorkDaoImpl.class);
 
     public WorkDaoImpl(NamedParameterJdbcOperations namedJdbc) {
         this.namedJdbc = namedJdbc;
@@ -54,15 +58,22 @@ public class WorkDaoImpl implements WorkDao {
                                     join hw2.work w on w.work_id = r.work_id
                                     where w.work_id = :id
                         """;
-        WorkVo workVo = namedJdbc.queryForObject(
-                workSql,
-                idParam,
-                (rs, _) -> new WorkVo(
-                        rs.getLong(1),
-                        rs.getString(2),
-                        new Composer(rs.getLong(4), rs.getString(5), rs.getString(6), rs.getString(7)),
-                        new Instrument(rs.getLong(8), rs.getString(9)),
-                        rs.getString(3)));
+        WorkVo workVo;
+        try {
+            workVo = namedJdbc.queryForObject(
+                    workSql,
+                    idParam,
+                    (rs, _) -> new WorkVo(
+                            rs.getLong(1),
+                            rs.getString(2),
+                            new Composer(rs.getLong(4), rs.getString(5), rs.getString(6), rs.getString(7)),
+                            new Instrument(rs.getLong(8), rs.getString(9)),
+                            rs.getString(3)));
+        } catch (EmptyResultDataAccessException e) {
+            log.error(e.getMessage());
+            return Optional.empty();
+        }
+
         List<Genre> genres = namedJdbc.query(genreSql, idParam, (rs, _) -> new Genre(rs.getLong(1), rs.getString(2)));
         List<Recording> recordings = namedJdbc.query(
                 recordingSql,

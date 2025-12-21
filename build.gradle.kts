@@ -60,18 +60,18 @@ subprojects {
     }
 
 
-    tasks.withType<JavaExec> {
+    tasks.withType<JavaExec> { //Adequate console system input
         standardInput = System.`in`
     }
 
-    tasks.withType<ShadowJar> {
+    tasks.withType<ShadowJar> { // XML Spring configuration for shadowJar
         duplicatesStrategy = DuplicatesStrategy.INCLUDE
         mergeServiceFiles()
         append("META-INF/spring.handlers")
         append("META-INF/spring.schemas")
     }
 
-    plugins.withId("java") {
+    plugins.withId("java") { // Mockito warnings elimination
         tasks.withType<Test>().configureEach {
             doFirst {
                 val mockitoCoreJar = classpath.files
@@ -84,5 +84,4 @@ subprojects {
             }
         }
     }
-
 }
