@@ -38,6 +38,7 @@ FROM hw2.work w
          JOIN LATERAL (
     SELECT genre_id
     FROM hw2.genre
+    WHERE w.work_id IS NOT NULL
     ORDER BY random()
     LIMIT (1 + (random() * 2)::int) -- 1..3
     ) g ON true

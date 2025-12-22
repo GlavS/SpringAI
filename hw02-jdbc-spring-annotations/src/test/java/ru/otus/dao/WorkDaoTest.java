@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 import org.flywaydb.core.Flyway;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,7 @@ import ru.otus.model.*;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {TestConfiguration.class, WorkDaoImpl.class})
+@DisplayName("В классе WorkDaoImpl")
 class WorkDaoTest {
 
     @Autowired
@@ -43,11 +45,14 @@ class WorkDaoTest {
     }
 
     @Test
-    void findAll() {
+    void findAllShouldReturnCorrectEntityList() {
         List<Work> all = dao.findAll();
+        assertThat(all).hasSize(3);
+        assertThat(all.getFirst()).isInstanceOf(Work.class);
     }
 
     @Test
+    @DisplayName("Метод findById возвращает сущность")
     void findByIdShouldReturnCorrectEntity() throws IOException {
         Resource resource = resourceLoader.getResource("classpath:fixtures/expected_work_1.json");
         Work expected = mapper.readValue(resource.getInputStream(), Work.class);
@@ -56,6 +61,7 @@ class WorkDaoTest {
     }
 
     @Test
+    @DisplayName("Метод findById возвращает пустой Optional, если сущности нет в базе")
     void findByIdShouldReturnOptionalEmptyInCaseOfNotFound() {
         Optional<Work> result = dao.findById(142L);
         assertThat(result).isEmpty();

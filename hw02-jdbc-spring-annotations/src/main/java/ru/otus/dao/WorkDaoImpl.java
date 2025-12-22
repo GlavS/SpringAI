@@ -1,9 +1,7 @@
 package ru.otus.dao;
 
 import java.sql.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -15,8 +13,8 @@ import ru.otus.model.*;
 @SuppressWarnings("java:S1068")
 public class WorkDaoImpl implements WorkDao {
 
-    private final NamedParameterJdbcOperations namedJdbc;
     private static final Logger log = LoggerFactory.getLogger(WorkDaoImpl.class);
+    private final NamedParameterJdbcOperations namedJdbc;
 
     public WorkDaoImpl(NamedParameterJdbcOperations namedJdbc) {
         this.namedJdbc = namedJdbc;
@@ -24,7 +22,80 @@ public class WorkDaoImpl implements WorkDao {
 
     @Override
     public List<Work> findAll() {
-        throw new UnsupportedOperationException("findAll TDD");
+        List<Work> resultWorkList = new ArrayList<>();
+        String workSql =
+                """
+                        select  w.work_id, w.title, w.difficulty,
+                                c.composer_id, c.name, c.surname, country,
+                                i.instrument_id, i.name
+                        from hw2.work w
+                                join hw2.composer c on w.composer_id = c.composer_id
+                                join hw2.instrument i on i.instrument_id = w.instrument_id
+                        """;
+
+        String genreVoSql =
+                """
+                        select w.work_id, g.genre_id, g.name from hw2.work w
+                            left join hw2.work_genre wg on w.work_id = wg.work_id
+                            left join hw2.genre g on g.genre_id = wg.genre_id
+                        order by w.work_id
+                        """;
+
+        String recordingSql =
+                """
+                        select r.recording_id,
+                               r.work_id,
+                               r.performer,
+                               r.label,
+                               r.recorded_at,
+                               r.duration_sec,
+                               r.source_url from hw2.recording r
+                        """;
+        List<WorkVo> workVoList = namedJdbc.query(
+                workSql,
+                (rs, _) -> new WorkVo(
+                        rs.getLong(1),
+                        rs.getString(2),
+                        new Composer(rs.getLong(4), rs.getString(5), rs.getString(6), rs.getString(7)),
+                        new Instrument(rs.getLong(8), rs.getString(9)),
+                        rs.getString(3)));
+        List<RecordingWorkIdVo> recordingWorkIdVos = namedJdbc.query(
+                recordingSql,
+                (rs, _) -> new RecordingWorkIdVo(
+                        rs.getLong(1),
+                        rs.getLong(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        Date.valueOf(rs.getString(5)),
+                        rs.getInt(6),
+                        rs.getString(7)));
+
+        Map<Long, List<Recording>> recordingIndex = new HashMap<>();
+        for (RecordingWorkIdVo r : recordingWorkIdVos) {
+            recordingIndex
+                    .computeIfAbsent(r.work_id(), _ -> new ArrayList<>())
+                    .add(new Recording(
+                            r.recording_id(), r.performer(), r.label(), r.recorded_at(), r.duration(), r.source_url()));
+        }
+
+        List<GengreVo> gengreVos =
+                namedJdbc.query(genreVoSql, (rs, _) -> new GengreVo(rs.getLong(1), rs.getLong(2), rs.getString(3)));
+        Map<Long, List<Genre>> genreIndex = new HashMap<>();
+        for (GengreVo g : gengreVos) {
+            genreIndex.computeIfAbsent(g.work_id(), _ -> new ArrayList<>()).add(new Genre(g.genre_id(), g.name()));
+        }
+
+        for (WorkVo w : workVoList) {
+            resultWorkList.add(new Work(
+                    w.work_id(),
+                    w.title(),
+                    w.composer(),
+                    w.instrument(),
+                    genreIndex.get(w.work_id()),
+                    recordingIndex.get(w.work_id())));
+        }
+
+        return resultWorkList;
     }
 
     @Override
@@ -102,4 +173,15 @@ public class WorkDaoImpl implements WorkDao {
     }
 
     private record WorkVo(long work_id, String title, Composer composer, Instrument instrument, String difficulty) {}
+
+    private record RecordingWorkIdVo(
+            long recording_id,
+            long work_id,
+            String performer,
+            String label,
+            Date recorded_at,
+            int duration,
+            String source_url) {}
+
+    private record GengreVo(long work_id, long genre_id, String name) {}
 }
