@@ -1,0 +1,79 @@
+[ {
+  "id" : 3,
+  "title" : "TestWorkTitle3",
+  "composer" : {
+    "id" : 2,
+    "name" : "TestComposerName2",
+    "surname" : "TestComposerSurname2",
+    "country" : "TestCountry2"
+  },
+  "instrument" : {
+    "id" : 1,
+    "name" : "Instrument1"
+  },
+  "genres" : [ {
+    "id" : 3,
+    "name" : "Genre3"
+  } ],
+  "recordings" : null
+}, {
+  "id" : 1,
+  "title" : "TestWorkTitle1",
+  "composer" : {
+    "id" : 1,
+    "name" : "TestComposerName1",
+    "surname" : "TestComposerSurname1",
+    "country" : "TestCountry1"
+  },
+  "instrument" : {
+    "id" : 1,
+    "name" : "Instrument1"
+  },
+  "genres" : [ {
+    "id" : 1,
+    "name" : "Genre1"
+  }, {
+    "id" : 2,
+    "name" : "Genre2"
+  } ],
+  "recordings" : [ {
+    "id" : 1,
+    "performer" : "TestPerformer1",
+    "label" : "TestLabel1",
+    "date" : 1577826000000,
+    "durationSec" : 180,
+    "sourceUrl" : "http://example.com/rec1"
+  }, {
+    "id" : 2,
+    "performer" : "TestPerformer2",
+    "label" : null,
+    "date" : 1612299600000,
+    "durationSec" : 210,
+    "sourceUrl" : null
+  } ]
+}, {
+  "id" : 2,
+  "title" : "TestWorkTitle2",
+  "composer" : {
+    "id" : 1,
+    "name" : "TestComposerName1",
+    "surname" : "TestComposerSurname1",
+    "country" : "TestCountry1"
+  },
+  "instrument" : {
+    "id" : 2,
+    "name" : "Instrument2"
+  },
+  "genres" : [ {
+    "id" : 2,
+    "name" : "Genre2"
+  } ],
+  "recordings" : [ {
+    "id" : 3,
+    "performer" : "TestPerformer3",
+    "label" : "TestLabel3",
+    "date" : 1646341200000,
+    "durationSec" : 240,
+    "sourceUrl" : "http://example.com/rec3"
+  } ]
+} ]

@@ -59,7 +59,7 @@ public class WorkDaoImpl implements WorkDao {
                         new Composer(rs.getLong(4), rs.getString(5), rs.getString(6), rs.getString(7)),
                         new Instrument(rs.getLong(8), rs.getString(9)),
                         rs.getString(3)));
-        List<RecordingWorkIdVo> recordingWorkIdVos = namedJdbc.query(
+        List<RecordingWorkIdVo> recordingWorkIdVoList = namedJdbc.query(
                 recordingSql,
                 (rs, _) -> new RecordingWorkIdVo(
                         rs.getLong(1),
@@ -71,17 +71,17 @@ public class WorkDaoImpl implements WorkDao {
                         rs.getString(7)));
 
         Map<Long, List<Recording>> recordingIndex = new HashMap<>();
-        for (RecordingWorkIdVo r : recordingWorkIdVos) {
+        for (RecordingWorkIdVo r : recordingWorkIdVoList) {
             recordingIndex
                     .computeIfAbsent(r.work_id(), _ -> new ArrayList<>())
                     .add(new Recording(
                             r.recording_id(), r.performer(), r.label(), r.recorded_at(), r.duration(), r.source_url()));
         }
 
-        List<GengreVo> gengreVos =
+        List<GengreVo> gengreVoList =
                 namedJdbc.query(genreVoSql, (rs, _) -> new GengreVo(rs.getLong(1), rs.getLong(2), rs.getString(3)));
         Map<Long, List<Genre>> genreIndex = new HashMap<>();
-        for (GengreVo g : gengreVos) {
+        for (GengreVo g : gengreVoList) {
             genreIndex.computeIfAbsent(g.work_id(), _ -> new ArrayList<>()).add(new Genre(g.genre_id(), g.name()));
         }
 
@@ -161,9 +161,14 @@ public class WorkDaoImpl implements WorkDao {
     }
 
     @Override
-    public Work save(Work work) {
-        if (work == null) throw new UnsupportedOperationException("parameter should not be null TDD");
-        throw new UnsupportedOperationException("save TDD");
+    public Work insert(Work work) {
+        if (work == null) throw new DaoException("parameter should not be null TDD");
+        return null; // TODO: работаем тут!
+    }
+
+    @Override
+    public Work update(Work work) {
+        return null;
     }
 
     @Override

@@ -9,7 +9,9 @@ public interface WorkDao {
 
     Optional<Work> findById(long id);
 
-    Work save(Work work);
+    Work insert(Work work);
+
+    Work update(Work work);
 
     void delete(long id);
 }

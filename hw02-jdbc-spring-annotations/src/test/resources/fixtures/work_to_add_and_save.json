@@ -1,0 +1,36 @@
+{
+  "id" : 0,
+  "title" : "test title",
+  "composer" : {
+    "id" : 0,
+    "name" : "test name",
+    "surname" : "test surname",
+    "country" : "test country"
+  },
+  "instrument" : {
+    "id" : 0,
+    "name" : "test name"
+  },
+  "genres" : [ {
+    "id" : 0,
+    "name" : "test name 1"
+  }, {
+    "id" : 0,
+    "name" : "test name 2"
+  } ],
+  "recordings" : [ {
+    "id" : 0,
+    "performer" : "test performer1",
+    "label" : "test label1",
+    "date" : 6728400000,
+    "durationSec" : 600,
+    "sourceUrl" : "test/url1"
+  }, {
+    "id" : 0,
+    "performer" : "test performer2",
+    "label" : "test label2",
+    "date" : 6814800000,
+    "durationSec" : 900,
+    "sourceUrl" : "test/url2"
+  } ]
+}
