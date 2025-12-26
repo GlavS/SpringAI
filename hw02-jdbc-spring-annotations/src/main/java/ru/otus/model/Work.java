@@ -9,6 +9,7 @@ public class Work {
     private Instrument instrument;
     private List<Genre> genres;
     private List<Recording> recordings;
+    private Difficulty difficulty;
 
     public Work() {}
 
@@ -18,13 +19,15 @@ public class Work {
             Composer composer,
             Instrument instrument,
             List<Genre> genres,
-            List<Recording> recordings) {
+            List<Recording> recordings,
+            Difficulty difficulty) {
         this.id = id;
         this.title = title;
         this.composer = composer;
         this.instrument = instrument;
         this.genres = genres;
         this.recordings = recordings;
+        this.difficulty = difficulty;
     }
 
     public long getId() {
@@ -75,6 +78,14 @@ public class Work {
         this.recordings = recordings;
     }
 
+    public Difficulty getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(Difficulty difficulty) {
+        this.difficulty = difficulty;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
@@ -85,7 +96,8 @@ public class Work {
                 && composer.equals(work.composer)
                 && instrument.equals(work.instrument)
                 && genres.equals(work.genres)
-                && recordings.equals(work.recordings);
+                && recordings.equals(work.recordings)
+                && difficulty.equals(work.difficulty);
     }
 
     @Override
@@ -96,17 +108,20 @@ public class Work {
         result = 31 * result + instrument.hashCode();
         result = 31 * result + genres.hashCode();
         result = 31 * result + recordings.hashCode();
+        result = 31 * result + difficulty.hashCode();
         return result;
     }
 
     @Override
     public String toString() {
-        return "Work{" + "id="
-                + id + ", title='"
-                + title + '\'' + ", composer="
-                + composer + ", instrument="
-                + instrument + ", genres="
-                + genres + ", recordings="
-                + recordings + '}';
+        return "Work{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", composer=" + composer +
+                ", instrument=" + instrument +
+                ", genres=" + genres +
+                ", recordings=" + recordings +
+                ", difficulty=" + difficulty +
+                '}';
     }
 }

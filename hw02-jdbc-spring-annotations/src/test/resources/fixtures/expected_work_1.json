@@ -32,5 +32,6 @@
     "date" : 1612299600000,
     "durationSec" : 210,
     "sourceUrl" : null
-  } ]
+  } ],
+  "difficulty": "EASY"
 }

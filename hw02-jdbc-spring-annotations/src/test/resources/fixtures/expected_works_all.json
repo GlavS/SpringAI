@@ -15,7 +15,8 @@
     "id" : 3,
     "name" : "Genre3"
   } ],
-  "recordings" : null
+  "recordings" : null,
+  "difficulty": "HARD"
 }, {
   "id" : 1,
   "title" : "TestWorkTitle1",
@@ -50,7 +51,8 @@
     "date" : 1612299600000,
     "durationSec" : 210,
     "sourceUrl" : null
-  } ]
+  } ],
+  "difficulty": "EASY"
 }, {
   "id" : 2,
   "title" : "TestWorkTitle2",
@@ -75,5 +77,6 @@
     "date" : 1646341200000,
     "durationSec" : 240,
     "sourceUrl" : "http://example.com/rec3"
-  } ]
+  } ],
+  "difficulty": "MEDIUM"
 } ]

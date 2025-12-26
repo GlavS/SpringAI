@@ -92,7 +92,9 @@ public class WorkDaoImpl implements WorkDao {
                     w.composer(),
                     w.instrument(),
                     genreIndex.get(w.work_id()),
-                    recordingIndex.get(w.work_id())));
+                    recordingIndex.get(w.work_id()),
+                    Difficulty.from(w.difficulty())
+            ));
         }
 
         return resultWorkList;
@@ -157,12 +159,19 @@ public class WorkDaoImpl implements WorkDao {
                         rs.getInt(5),
                         rs.getString(6)));
         return Optional.of(
-                new Work(workVo.work_id(), workVo.title(), workVo.composer(), workVo.instrument(), genres, recordings));
+                new Work(workVo.work_id(), workVo.title(), workVo.composer(), workVo.instrument(), genres, recordings, Difficulty.from(workVo.difficulty())));
     }
 
     @Override
     public Work insert(Work work) {
         if (work == null) throw new DaoException("parameter should not be null TDD");
+        Map<String, Object> params = Map.of(
+                "work_id", work.getId(),
+                "title", work.getTitle(),
+                "composer_id", work.getComposer().getId(),
+                "instrument_id", work.getInstrument().getId(),
+                "difficulty", work.getDifficulty()
+        );
         return null; // TODO: работаем тут!
     }
 
