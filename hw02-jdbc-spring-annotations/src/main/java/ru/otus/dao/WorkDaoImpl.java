@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import ru.otus.model.*;
 
 @Component
-@SuppressWarnings("java:S1068")
+@SuppressWarnings({"java:S1068", "java:S1481", "java:S1854"})
 public class WorkDaoImpl implements WorkDao {
 
     private static final Logger log = LoggerFactory.getLogger(WorkDaoImpl.class);
@@ -93,8 +93,7 @@ public class WorkDaoImpl implements WorkDao {
                     w.instrument(),
                     genreIndex.get(w.work_id()),
                     recordingIndex.get(w.work_id()),
-                    Difficulty.from(w.difficulty())
-            ));
+                    Difficulty.from(w.difficulty())));
         }
 
         return resultWorkList;
@@ -158,8 +157,14 @@ public class WorkDaoImpl implements WorkDao {
                         Date.valueOf(rs.getString(4)),
                         rs.getInt(5),
                         rs.getString(6)));
-        return Optional.of(
-                new Work(workVo.work_id(), workVo.title(), workVo.composer(), workVo.instrument(), genres, recordings, Difficulty.from(workVo.difficulty())));
+        return Optional.of(new Work(
+                workVo.work_id(),
+                workVo.title(),
+                workVo.composer(),
+                workVo.instrument(),
+                genres,
+                recordings,
+                Difficulty.from(workVo.difficulty())));
     }
 
     @Override
@@ -170,9 +175,10 @@ public class WorkDaoImpl implements WorkDao {
                 "title", work.getTitle(),
                 "composer_id", work.getComposer().getId(),
                 "instrument_id", work.getInstrument().getId(),
-                "difficulty", work.getDifficulty()
-        );
-        return null; // TODO: работаем тут!
+                "difficulty", work.getDifficulty());
+
+
+        return null;
     }
 
     @Override

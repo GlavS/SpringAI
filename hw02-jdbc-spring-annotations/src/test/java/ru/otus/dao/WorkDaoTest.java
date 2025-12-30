@@ -78,7 +78,7 @@ class WorkDaoTest {
     void save() throws IOException {
         Work workToAdd = mapper.readValue(
                 resourceLoader
-                        .getResource("classpath:fixtures/work_to_add_and_save.json")
+                        .getResource("classpath:fixtures/work_to_add_and_save.json")//TODO: переделать данные для ввода (связанные сущности должны существовать в базе).
                         .getInputStream(),
                 Work.class);
         dao.insert(workToAdd);

@@ -114,14 +114,13 @@ public class Work {
 
     @Override
     public String toString() {
-        return "Work{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", composer=" + composer +
-                ", instrument=" + instrument +
-                ", genres=" + genres +
-                ", recordings=" + recordings +
-                ", difficulty=" + difficulty +
-                '}';
+        return "Work{" + "id="
+                + id + ", title='"
+                + title + '\'' + ", composer="
+                + composer + ", instrument="
+                + instrument + ", genres="
+                + genres + ", recordings="
+                + recordings + ", difficulty="
+                + difficulty + '}';
     }
 }

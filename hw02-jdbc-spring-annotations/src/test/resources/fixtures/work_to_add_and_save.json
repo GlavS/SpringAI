@@ -1,36 +1,30 @@
 {
   "id" : 0,
-  "title" : "test title",
+  "title" : "Saved test title",
   "composer" : {
-    "id" : 0,
-    "name" : "test name",
-    "surname" : "test surname",
-    "country" : "test country"
+    "id" : 2,
+    "name" : "TestComposerName2",
+    "surname" : "TestComposerSurname2",
+    "country" : "TestCountry2"
   },
   "instrument" : {
-    "id" : 0,
-    "name" : "test name"
+    "id" : 1,
+    "name" : "Instrument1"
   },
   "genres" : [ {
-    "id" : 0,
-    "name" : "test name 1"
+    "id" : 1,
+    "name" : "Genre1"
   }, {
-    "id" : 0,
-    "name" : "test name 2"
+    "id" : 2,
+    "name" : "Genre2"
   } ],
   "recordings" : [ {
-    "id" : 0,
-    "performer" : "test performer1",
-    "label" : "test label1",
-    "date" : 6728400000,
-    "durationSec" : 600,
-    "sourceUrl" : "test/url1"
-  }, {
-    "id" : 0,
-    "performer" : "test performer2",
-    "label" : "test label2",
-    "date" : 6814800000,
-    "durationSec" : 900,
-    "sourceUrl" : "test/url2"
-  } ]
+    "id" : 1,
+    "performer" : "TestPerformer1",
+    "label" : "TestLabel1",
+    "date" : 1679826000000,
+    "durationSec" : 180,
+    "sourceUrl" : "http://example.com/rec1"
+  }],
+  "difficulty": "MEDIUM"
 }

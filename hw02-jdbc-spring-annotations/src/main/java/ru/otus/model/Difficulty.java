@@ -12,12 +12,8 @@ public enum Difficulty {
     HARD("hard"),
     VERY_HARD("very_hard");
 
-    private static final Map<String, Difficulty> BY_DIFFICULTY =
-            Arrays.stream(values())
-                    .collect(Collectors.toMap(
-                            difficulty -> normalizeInput(difficulty.code),
-                            Function.identity()
-                    ));
+    private static final Map<String, Difficulty> BY_DIFFICULTY = Arrays.stream(values())
+            .collect(Collectors.toMap(difficulty -> normalizeInput(difficulty.code), Function.identity()));
     private final String code;
 
     Difficulty(String code) {
