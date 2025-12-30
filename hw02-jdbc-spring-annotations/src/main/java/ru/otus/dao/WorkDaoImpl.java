@@ -1,13 +1,17 @@
 package ru.otus.dao;
 
-import java.sql.Date;
-import java.util.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 import ru.otus.model.*;
+
+import java.sql.Date;
+import java.util.*;
 
 @Component
 @SuppressWarnings({"java:S1068", "java:S1481", "java:S1854"})
@@ -18,6 +22,16 @@ public class WorkDaoImpl implements WorkDao {
 
     public WorkDaoImpl(NamedParameterJdbcOperations namedJdbc) {
         this.namedJdbc = namedJdbc;
+    }
+
+    private static long getNewWorkId(KeyHolder keyHolder) {
+        Map<String, Object> newWorkAsMap;
+        if (keyHolder.getKeys() != null) {
+            newWorkAsMap = keyHolder.getKeys();
+        } else {
+            throw new DaoException("Error getting data from keyholder");
+        }
+        return (long) newWorkAsMap.get("work_id");
     }
 
     @Override
@@ -169,16 +183,40 @@ public class WorkDaoImpl implements WorkDao {
 
     @Override
     public Work insert(Work work) {
-        if (work == null) throw new DaoException("parameter should not be null TDD");
-        Map<String, Object> params = Map.of(
-                "work_id", work.getId(),
+        if (work == null) throw new DaoException("parameter should not be null");
+        Map<String, Object> workParamMap = Map.of(
                 "title", work.getTitle(),
                 "composer_id", work.getComposer().getId(),
                 "instrument_id", work.getInstrument().getId(),
-                "difficulty", work.getDifficulty());
+                "difficulty", work.getDifficulty().name());
+        MapSqlParameterSource params = new MapSqlParameterSource(workParamMap);
+        String insertSql = """
+                insert into hw2.work(title, composer_id, instrument_id, difficulty)
+                values (:title, :composer_id, :instrument_id, :difficulty)
+                """;
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        namedJdbc.update(insertSql, params, keyHolder);
+        long newWorkId = getNewWorkId(keyHolder);
+        long[] genre_ids = work.getGenres().stream().map(Genre::getId).mapToLong(Long::longValue).toArray();
+        MapSqlParameterSource wgParams = new MapSqlParameterSource();
+        wgParams.addValue("work_id", newWorkId);
+        wgParams.addValue("genre_ids", genre_ids);
+        String wgInsertSql = """
+                INSERT INTO hw2.work_genre (work_id, genre_id)
+                SELECT :work_id, unnest(:genre_ids::bigint[])
+                ON CONFLICT DO NOTHING
+                """;
+        namedJdbc.update(wgInsertSql, wgParams);
 
-
-        return null;
+        return new Work(
+                newWorkId,
+                work.getTitle(),
+                work.getComposer(),
+                work.getInstrument(),
+                work.getGenres(),
+                work.getRecordings(),//TODO Записей еще нет. Надо делать отдельно
+                work.getDifficulty()
+        );
     }
 
     @Override
@@ -192,7 +230,8 @@ public class WorkDaoImpl implements WorkDao {
         throw new UnsupportedOperationException("delete TDD");
     }
 
-    private record WorkVo(long work_id, String title, Composer composer, Instrument instrument, String difficulty) {}
+    private record WorkVo(long work_id, String title, Composer composer, Instrument instrument, String difficulty) {
+    }
 
     private record RecordingWorkIdVo(
             long recording_id,
@@ -201,7 +240,9 @@ public class WorkDaoImpl implements WorkDao {
             String label,
             Date recorded_at,
             int duration,
-            String source_url) {}
+            String source_url) {
+    }
 
-    private record GengreVo(long work_id, long genre_id, String name) {}
+    private record GengreVo(long work_id, long genre_id, String name) {
+    }
 }

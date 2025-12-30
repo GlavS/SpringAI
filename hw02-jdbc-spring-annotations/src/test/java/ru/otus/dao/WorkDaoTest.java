@@ -81,7 +81,8 @@ class WorkDaoTest {
                         .getResource("classpath:fixtures/work_to_add_and_save.json")//TODO: переделать данные для ввода (связанные сущности должны существовать в базе).
                         .getInputStream(),
                 Work.class);
-        dao.insert(workToAdd);
+        Work saved = dao.insert(workToAdd);
+        System.out.println(saved); //TODO Проверить recordings
     }
 
     @Test

@@ -4,28 +4,28 @@ SET search_path TO hw2;
 -- =========================
 -- GENRES (~20)
 -- =========================
-INSERT INTO hw2.genre (genre_id, name)
+INSERT INTO hw2.genre (name)
 VALUES
-    (1,  'Baroque'),
-    (2,  'Classical'),
-    (3,  'Romantic'),
-    (4,  'Impressionism'),
-    (5,  'Modern'),
-    (6,  'Contemporary'),
-    (7,  'Sacred'),
-    (8,  'Opera'),
-    (9,  'Ballet'),
-    (10, 'Chamber Music'),
-    (11, 'Symphony'),
-    (12, 'Concerto'),
-    (13, 'Sonata'),
-    (14, 'Suite'),
-    (15, 'Etude'),
-    (16, 'Nocturne'),
-    (17, 'Prelude'),
-    (18, 'Fugue'),
-    (19, 'Variations'),
-    (20, 'Program Music')
+    ('Baroque'),
+    ('Classical'),
+    ('Romantic'),
+    ('Impressionism'),
+    ('Modern'),
+    ('Contemporary'),
+    ('Sacred'),
+    ('Opera'),
+    ('Ballet'),
+    ('Chamber Music'),
+    ('Symphony'),
+    ('Concerto'),
+    ('Sonata'),
+    ('Suite'),
+    ('Etude'),
+    ('Nocturne'),
+    ('Prelude'),
+    ('Fugue'),
+    ('Variations'),
+    ('Program Music')
 ON CONFLICT (name) DO NOTHING;
 
 -- =========================

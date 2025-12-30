@@ -23,7 +23,7 @@
     "performer" : "TestPerformer1",
     "label" : "TestLabel1",
     "date" : 1679826000000,
-    "durationSec" : 180,
+    "durationSec" : 1800,
     "sourceUrl" : "http://example.com/rec1"
   }],
   "difficulty": "MEDIUM"
