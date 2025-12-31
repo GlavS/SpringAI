@@ -11,14 +11,22 @@ dependencies {
     testImplementation(platform("org.junit:junit-bom:6.0.1"))
     testImplementation(platform("org.testcontainers:testcontainers-bom:2.0.2"))
 
+//    Spring--------------------------------------------------------
     implementation("org.springframework:spring-context")
     implementation("org.springframework:spring-jdbc")
     implementation("org.springframework:spring-tx")
+    implementation("org.springframework:spring-webmvc")
 
+//    Utils----------------------------------------------------------
     implementation("ch.qos.logback:logback-classic:1.5.21")
     implementation("org.flywaydb:flyway-core:11.19.0")
     implementation("org.flywaydb:flyway-database-postgresql:11.19.0")
     implementation("org.postgresql:postgresql:42.7.8")
+    implementation("com.fasterxml.jackson.core:jackson-databind")
+    compileOnly("jakarta.servlet:jakarta.servlet-api:6.1.0")
+    implementation("org.apache.tomcat.embed:tomcat-embed-core:11.0.14")
+
+//    Tests----------------------------------------------------------
 
     testImplementation("org.springframework:spring-test")
     testImplementation("org.junit.jupiter:junit-jupiter")
