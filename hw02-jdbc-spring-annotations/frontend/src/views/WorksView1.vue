@@ -1,30 +1,117 @@
-<script setup>
+<script lang="ts" setup>
 import { onMounted, ref } from 'vue'
-import { worksApi } from "@/api/WorksApi.ts";
+import {type GenreDto,
+  type InstrumentDto,
+  type ComposerDto,
+  type RecordingDto,
+  type WorkDto,
+  worksApi} from "@/api/WorksApi";
 
-const items = ref([])
-const error = ref('')
-const loading = ref(false)
-const expandedId = ref(null)
+const items = ref<WorkDto[]>([])
+const error = ref<string>('')
+const loading = ref<boolean>(false)
+const expandedId = ref<number | null>(null)
 
-function toggle(id) {
+const instrument: InstrumentDto = {
+  id: 1,
+  name: "Test instrument 1"
+}
+
+const composer: ComposerDto = {
+  id: 1,
+  name: "Name_1",
+  surname: "Surname_1"
+}
+
+const genres: GenreDto[] = [
+  {
+    id: 1,
+    name: "Classic"
+  },
+  {
+    id: 2,
+    name: "Baroque"
+  }
+]
+
+const recordings: RecordingDto[] = [
+  {
+    id: 1,
+    performer: "Test performer 1",
+    label: "Test label 1",
+    recordedAt: "20.03.1970",
+    durationSec: 1800,
+    sourceUrl: "http://test.com"
+  },
+  {
+    id: 2,
+    performer: "Test performer 2",
+    label: "Test label 2",
+    recordedAt: "21.03.1970",
+    durationSec: 800,
+    sourceUrl: "http://test.com"
+  }
+]
+
+const mockValues: WorkDto[] = [
+  {
+    id: 1,
+    title: "Test title 1",
+    composer: composer,
+    instrument: instrument,
+    difficulty: "HARD",
+    genres: genres,
+    recordings: recordings
+  },
+  {
+    id: 2,
+    title: "Test title 2",
+    composer: composer,
+    instrument: instrument,
+    difficulty: "EASY",
+    genres: genres,
+    recordings: recordings
+  },
+  {
+    id: 3,
+    title: "Test title 3",
+    composer: composer,
+    instrument: instrument,
+    difficulty: "MEDIUM",
+    genres: genres,
+    recordings: recordings
+  }
+]
+
+function toggle(id: number) {
   expandedId.value = expandedId.value === id ? null : id
 }
 
-function fmtDuration(sec) {
+function fmtDuration(sec: number) {
   if (sec == null) return ''
   const m = Math.floor(sec / 60)
   const s = sec % 60
   return `${m}:${String(s).padStart(2,'0')}`
 }
 
+// onMounted(async () => {
+//   loading.value = true
+//   error.value = ''
+//   try {
+//     items.value = await worksApi.list()
+//   } catch (e) {
+//     error.value = e instanceof Error?  e.message : String(e)
+//   } finally {
+//     loading.value = false
+//   }
+// })
 onMounted(async () => {
   loading.value = true
   error.value = ''
   try {
-    items.value = await worksApi.list()
+    items.value = mockValues
   } catch (e) {
-    error.value = e.message || String(e)
+    error.value = e instanceof Error?  e.message : String(e)
   } finally {
     loading.value = false
   }
