@@ -1,22 +1,22 @@
-<script setup>
-  import { onMounted, ref} from 'vue'
-  import { worksApi } from "../api/WorksApi.js";
+<script lang="ts" setup>
+import {onMounted, ref} from 'vue'
+import {type WorkDto, worksApi} from "@/api/WorksApi";
 
-  const items = ref([])
-  const error = ref('')
-  const loading = ref(false)
+const items = ref<WorkDto[]>([])
+const error = ref<string>('')
+const loading = ref<boolean>(false)
 
-  onMounted(async () =>{
-    loading.value = true;
-    error.value = '';
-    try{
-      items.value = await worksApi.list();
-    } catch (e) {
-      error.value = e.message || String(e)
-    } finally {
-      loading.value = false
-    }
-  })
+onMounted(async () => {
+  loading.value = true;
+  error.value = '';
+  try {
+    items.value = await worksApi.list();
+  } catch (e: unknown) {
+    error.value = e instanceof Error ? e.message : String(e)
+  } finally {
+    loading.value = false
+  }
+})
 </script>
 
 
@@ -24,7 +24,7 @@
   <div class="container py-4">
     <h3 class="mb-3">Works</h3>
 
-    <div v-if="error" class="alert alert-danger">{{ error }}</div>
+    <div v-if="error.length" class="alert alert-danger">{{ error }}</div>
     <div v-else-if="loading">Loading...</div>
 
     <table v-else class="table table-striped">
