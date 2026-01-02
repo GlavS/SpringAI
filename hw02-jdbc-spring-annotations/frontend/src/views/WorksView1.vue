@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue'
 import type { WorkDto } from "@/api/WorksApi"
-import { mockValues } from "@/views/mocks/WorksViewMocks"
+import { mockWorks } from "@/views/mocks/WorksViewMocks"
 
 type LoadState =
     | { status: 'loading' }
@@ -29,7 +29,7 @@ function getErrorMessage(e: unknown): string {
 onMounted(async () => {
   state.value = {status: 'loading'}
   try {
-    const data = mockValues //запрос из API
+    const data = mockWorks //запрос из API
     state.value = {status: 'success', data: data}
   } catch (e) {
     state.value = {status: 'error', message: getErrorMessage(e)}
@@ -65,13 +65,13 @@ onMounted(async () => {
           <td>{{ w.instrument?.name }}</td>
           <td>{{ w.difficulty }}</td>
           <td class="text-end">
-            <button class="btn btn-sm btn-outline-primary" @click="toggle(w.id)">
+            <button class="btn btn-sm btn-outline-secondary" @click="toggle(w.id)">
               {{ expandedId === w.id ? 'Hide' : 'Details' }}
             </button>
           </td>
         </tr>
 
-        <tr v-if="expandedId === w.id">
+        <tr class="bg-light" v-if="expandedId === w.id">
           <td colspan="6">
             <div class="mb-2">
               <strong>Genres:</strong>

@@ -5,12 +5,15 @@ export type WorkDtoSmall = {
     title: string
 }
 
-type Id = number
+export type Id = number
+
+export type DifficultyDto = 'EASY' | 'MEDIUM' | 'HARD' | 'VERY_HARD'
 
 export type ComposerDto = {
     id: Id
     name: string
     surname: string
+    country?: string | null
 }
 
 export type InstrumentDto = {
@@ -35,11 +38,11 @@ export type RecordingDto = {
 export type WorkDto = {
     id: Id
     title: string
-    difficulty?: string | null
-    composer?: ComposerDto | null
-    instrument?: InstrumentDto | null
-    genres?: GenreDto[] | null
-    recordings?: RecordingDto[] | null
+    difficulty: DifficultyDto
+    composer: ComposerDto
+    instrument: InstrumentDto
+    genres: GenreDto[]
+    recordings: RecordingDto[]
 }
 
 
