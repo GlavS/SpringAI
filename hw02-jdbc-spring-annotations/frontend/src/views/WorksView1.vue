@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue'
 import type { WorkDto } from "@/api/WorksApi"
+import { worksApi } from "@/api/WorksApi"
 import { mockWorks } from "@/views/mocks/WorksViewMocks"
 
 type LoadState =
@@ -29,7 +30,8 @@ function getErrorMessage(e: unknown): string {
 onMounted(async () => {
   state.value = {status: 'loading'}
   try {
-    const data = mockWorks //запрос из API
+    // const data = mockWorks //запрос из моков
+    const data = await worksApi.list()
     state.value = {status: 'success', data: data}
   } catch (e) {
     state.value = {status: 'error', message: getErrorMessage(e)}

@@ -16,7 +16,7 @@
     "name" : "Genre3"
   } ],
   "recordings" : null,
-  "difficulty": "HARD"
+  "difficulty" : "HARD"
 }, {
   "id" : 1,
   "title" : "TestWorkTitle1",
@@ -41,18 +41,18 @@
     "id" : 1,
     "performer" : "TestPerformer1",
     "label" : "TestLabel1",
-    "date" : 1577826000000,
+    "date" : 1577818800000,
     "durationSec" : 180,
     "sourceUrl" : "http://example.com/rec1"
   }, {
     "id" : 2,
     "performer" : "TestPerformer2",
     "label" : null,
-    "date" : 1612299600000,
+    "date" : 1612292400000,
     "durationSec" : 210,
     "sourceUrl" : null
   } ],
-  "difficulty": "EASY"
+  "difficulty" : "EASY"
 }, {
   "id" : 2,
   "title" : "TestWorkTitle2",
@@ -74,9 +74,9 @@
     "id" : 3,
     "performer" : "TestPerformer3",
     "label" : "TestLabel3",
-    "date" : 1646341200000,
+    "date" : 1646334000000,
     "durationSec" : 240,
     "sourceUrl" : "http://example.com/rec3"
   } ],
-  "difficulty": "MEDIUM"
+  "difficulty" : "MEDIUM"
 } ]

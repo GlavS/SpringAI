@@ -45,6 +45,7 @@ public class WorkDaoImpl implements WorkDao {
                         from hw2.work w
                                 join hw2.composer c on w.composer_id = c.composer_id
                                 join hw2.instrument i on i.instrument_id = w.instrument_id
+                        order by w.work_id
                         """;
 
         String genreVoSql =
