@@ -1,82 +1,66 @@
 <script lang="ts" setup>
-import {onMounted, ref} from 'vue'
-import {type WorkDtoSmall, worksApi} from "@/api/WorksApi";
+import { onMounted, ref } from 'vue'
+import type { WorkDto } from "@/api/WorksApi"
+import { worksApi } from "@/api/WorksApi"
+import WorksRowView from "@/views/WorksRowView.vue";
+// import { mockWorks } from "@/views/mocks/WorksViewMocks"
 
-const items = ref<WorkDtoSmall[]>([])
-const error = ref<string>('')
-const loading = ref<boolean>(false)
+type LoadState =
+    | { status: 'loading' }
+    | { status: 'error'; message: string }
+    | { status: 'success'; data: WorkDto[] }
 
-const mockValues: WorkDtoSmall[] =
-    [
-      {
-        "id": 1,
-        "title": "Test title 1"
-      },
-      {
-        "id": 2,
-        "title": "Test title 2"
-      },
-      {
-        "id": 3,
-        "title": "Test title 3"
-      },
-      {
-        "id": 4,
-        "title": "Test title 4"
-      },
-      {
-        "id": 5,
-        "title": "Test title 5"
-      },
-    ]
+const state = ref<LoadState>({status: 'loading'})
+const expandedId = ref<number | null>(null)
 
+function toggle(id: number) {
+  expandedId.value = expandedId.value === id ? null : id
+}
 
-// onMounted(async () => {
-//   loading.value = true;
-//   error.value = '';
-//   try {
-//     items.value = await worksApi.list();
-//   } catch (e: unknown) {
-//     error.value = e instanceof Error ? e.message : String(e)
-//   } finally {
-//     loading.value = false
-//   }
-// })
+function getErrorMessage(e: unknown): string {
+  return e instanceof Error ? e.message : String(e)
+}
+
 onMounted(async () => {
-  loading.value = true;
-  error.value = '';
+  state.value = {status: 'loading'}
   try {
-    items.value = mockValues;
-  } catch (e: unknown) {
-    error.value = e instanceof Error ? e.message : String(e)
-  } finally {
-    loading.value = false
+    // const data = mockWorks //запрос из моков
+    const data = await worksApi.list()
+    state.value = {status: 'success', data: data}
+  } catch (e) {
+    state.value = {status: 'error', message: getErrorMessage(e)}
   }
 })
 </script>
-
 
 <template>
   <div class="container py-4">
     <h3 class="mb-3">Works</h3>
 
-    <div v-if="error.length" class="alert alert-danger">{{ error }}</div>
-    <div v-else-if="loading">Loading...</div>
+    <div v-if="state.status === 'error'" class="alert alert-danger">{{ state.message }}</div>
+    <div v-else-if="state.status === 'loading'">Loading...</div>
 
-    <table v-else class="table table-striped">
+    <table v-else class="table table-striped align-middle">
       <thead>
       <tr>
         <th style="width: 80px;">ID</th>
         <th>Title</th>
+        <th>Composer</th>
+        <th>Instrument</th>
+        <th>Difficulty</th>
+        <th style="width: 120px;"></th>
       </tr>
       </thead>
+
       <tbody>
-      <tr v-for="w in items" :key="w.id">
-        <td>{{ w.id }}</td>
-        <td>{{ w.title }}</td>
-      </tr>
+        <WorksRowView
+            v-for="w in state.data"
+            :key="w.id"
+            :work="w"
+            :expanded="expandedId === w.id"
+            @toggle="toggle"
+        />
       </tbody>
     </table>
   </div>
-
 </template>
