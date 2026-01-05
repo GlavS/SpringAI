@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue'
-import type { WorkDto } from "@/api/WorksApi"
-import { worksApi } from "@/api/WorksApi"
+import {onMounted, ref} from 'vue'
+import type {WorkDto} from "@/api/WorksApi"
+import {worksApi} from "@/api/WorksApi"
 import WorksRowView from "@/views/WorksRowView.vue";
-// import { mockWorks } from "@/views/mocks/WorksViewMocks"
+import { mockWorks } from "@/views/mocks/WorksViewMocks"
 
 type LoadState =
     | { status: 'loading' }
@@ -24,8 +24,8 @@ function getErrorMessage(e: unknown): string {
 onMounted(async () => {
   state.value = {status: 'loading'}
   try {
-    // const data = mockWorks //запрос из моков
-    const data = await worksApi.list()
+    const data = mockWorks //запрос из моков
+    // const data = await worksApi.list()
     state.value = {status: 'success', data: data}
   } catch (e) {
     state.value = {status: 'error', message: getErrorMessage(e)}
@@ -53,13 +53,13 @@ onMounted(async () => {
       </thead>
 
       <tbody>
-        <WorksRowView
-            v-for="w in state.data"
-            :key="w.id"
-            :work="w"
-            :expanded="expandedId === w.id"
-            @toggle="toggle"
-        />
+      <WorksRowView
+          v-for="w in state.data"
+          :key="w.id"
+          :expanded="expandedId === w.id"
+          :work="w"
+          @toggle="toggle"
+      />
       </tbody>
     </table>
   </div>

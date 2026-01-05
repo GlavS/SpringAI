@@ -37,7 +37,6 @@ public class Hw2 {
         var webCtx = new AnnotationConfigWebApplicationContext();
         webCtx.setParent(coreCtx);
         webCtx.register(WebConfig.class);
-
         startTomcat(webCtx, 8080);
 
     }
