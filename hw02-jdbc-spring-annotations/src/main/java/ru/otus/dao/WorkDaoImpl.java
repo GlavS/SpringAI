@@ -73,6 +73,7 @@ public class WorkDaoImpl implements WorkDao {
                         new Composer(rs.getLong(4), rs.getString(5), rs.getString(6), rs.getString(7)),
                         new Instrument(rs.getLong(8), rs.getString(9)),
                         rs.getString(3)));
+        log.debug("{}", workSql);
         List<RecordingWorkIdVo> recordingWorkIdVoList = namedJdbc.query(
                 recordingSql,
                 (rs, _) -> new RecordingWorkIdVo(
@@ -83,7 +84,7 @@ public class WorkDaoImpl implements WorkDao {
                         Date.valueOf(rs.getString(5)),
                         rs.getInt(6),
                         rs.getString(7)));
-
+        log.debug("{}", recordingSql);
         Map<Long, List<Recording>> recordingIndex = new HashMap<>();
         for (RecordingWorkIdVo r : recordingWorkIdVoList) {
             recordingIndex
@@ -91,9 +92,10 @@ public class WorkDaoImpl implements WorkDao {
                     .add(new Recording(
                             r.recording_id(), r.performer(), r.label(), r.recorded_at(), r.duration(), r.source_url()));
         }
-
+        log.debug("{}", recordingSql);
         List<GengreVo> gengreVoList =
                 namedJdbc.query(genreVoSql, (rs, _) -> new GengreVo(rs.getLong(1), rs.getLong(2), rs.getString(3)));
+
         Map<Long, List<Genre>> genreIndex = new HashMap<>();
         for (GengreVo g : gengreVoList) {
             genreIndex.computeIfAbsent(g.work_id(), _ -> new ArrayList<>()).add(new Genre(g.genre_id(), g.name()));
@@ -155,12 +157,14 @@ public class WorkDaoImpl implements WorkDao {
                             new Composer(rs.getLong(4), rs.getString(5), rs.getString(6), rs.getString(7)),
                             new Instrument(rs.getLong(8), rs.getString(9)),
                             rs.getString(3)));
+            log.debug("{}", workSql);
         } catch (EmptyResultDataAccessException e) {
             log.error(e.getMessage());
             return Optional.empty();
         }
 
         List<Genre> genres = namedJdbc.query(genreSql, idParam, (rs, _) -> new Genre(rs.getLong(1), rs.getString(2)));
+        log.debug("{}", genreSql);
         List<Recording> recordings = namedJdbc.query(
                 recordingSql,
                 idParam,
@@ -171,6 +175,7 @@ public class WorkDaoImpl implements WorkDao {
                         Date.valueOf(rs.getString(4)),
                         rs.getInt(5),
                         rs.getString(6)));
+        log.debug("{}", recordingSql);
         return Optional.of(new Work(
                 workVo.work_id(),
                 workVo.title(),
