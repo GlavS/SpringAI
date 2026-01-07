@@ -7,8 +7,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
-
-import org.assertj.core.api.recursive.comparison.RecursiveComparisonConfiguration;
 import org.flywaydb.core.Flyway;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -56,8 +54,7 @@ class WorkDaoTest {
                 resourceLoader
                         .getResource("classpath:fixtures/expected_works_all.json")
                         .getInputStream(),
-                new TypeReference<>() {
-                });
+                new TypeReference<>() {});
         assertThat(all).usingRecursiveComparison().isEqualTo(expectedList);
     }
 
@@ -85,7 +82,7 @@ class WorkDaoTest {
                         .getInputStream(),
                 Work.class);
         Work saved = dao.insert(workToAdd);
-        System.out.println(saved); //TODO Проверить recordings
+        System.out.println(saved); // TODO Проверить recordings
     }
 
     @Test

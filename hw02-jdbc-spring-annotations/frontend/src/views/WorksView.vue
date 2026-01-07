@@ -24,8 +24,8 @@ function getErrorMessage(e: unknown): string {
 onMounted(async () => {
   state.value = {status: 'loading'}
   try {
-    const data = mockWorks //запрос из моков
-    // const data = await worksApi.list()
+    // const data = mockWorks //запрос из моков
+    const data = await worksApi.list()
     state.value = {status: 'success', data: data}
   } catch (e) {
     state.value = {status: 'error', message: getErrorMessage(e)}

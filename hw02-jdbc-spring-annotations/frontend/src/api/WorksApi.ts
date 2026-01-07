@@ -48,7 +48,12 @@ export type WorkDto = {
 
 export const worksApi = {
     async list(): Promise<WorkDto[]> {
-        const {data} = await axios.get<WorkDto[]>('/api/works')
-        return data
+        const result = await axios.get<WorkDto[]>('/api/works')
+        return result.data
+    },
+
+    async getById(id: Id): Promise<WorkDto>{
+        const result = await axios.get<WorkDto>(`/api/works/${id}`)
+        return result.data
     }
 }

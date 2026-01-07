@@ -1,5 +1,6 @@
 package ru.otus;
 
+import java.io.File;
 import org.apache.catalina.Context;
 import org.apache.catalina.LifecycleException;
 import org.apache.catalina.startup.Tomcat;
@@ -13,15 +14,14 @@ import org.springframework.web.context.support.AnnotationConfigWebApplicationCon
 import org.springframework.web.servlet.DispatcherServlet;
 import ru.otus.application.Hw2ApplicationRunner;
 
-import java.io.File;
-
 @Configuration
-@ComponentScan(basePackages = "ru.otus", excludeFilters = {
-        @ComponentScan.Filter(type = FilterType.ANNOTATION, classes = Controller.class),
-        @ComponentScan.Filter(type = FilterType.ANNOTATION, classes = RestController.class),
-        @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = WebConfig.class)
-})
-
+@ComponentScan(
+        basePackages = "ru.otus",
+        excludeFilters = {
+            @ComponentScan.Filter(type = FilterType.ANNOTATION, classes = Controller.class),
+            @ComponentScan.Filter(type = FilterType.ANNOTATION, classes = RestController.class),
+            @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = WebConfig.class)
+        })
 @PropertySource("classpath:application.properties")
 public class Hw2 {
 
@@ -38,7 +38,6 @@ public class Hw2 {
         webCtx.setParent(coreCtx);
         webCtx.register(WebConfig.class);
         startTomcat(webCtx, 8080);
-
     }
 
     private static void startTomcat(WebApplicationContext webCtx, int port) throws LifecycleException {
@@ -59,5 +58,4 @@ public class Hw2 {
         log.info("Tomcat started on port: {}", port);
         tomcat.getServer().await();
     }
-
 }

@@ -1,5 +1,7 @@
 package ru.otus.dao;
 
+import java.sql.Date;
+import java.util.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -9,9 +11,6 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 import ru.otus.model.*;
-
-import java.sql.Date;
-import java.util.*;
 
 @Component
 @SuppressWarnings({"java:S1068", "java:S1481", "java:S1854"})
@@ -191,18 +190,23 @@ public class WorkDaoImpl implements WorkDao {
                 "instrument_id", work.getInstrument().getId(),
                 "difficulty", work.getDifficulty().name());
         MapSqlParameterSource params = new MapSqlParameterSource(workParamMap);
-        String insertSql = """
+        String insertSql =
+                """
                 insert into hw2.work(title, composer_id, instrument_id, difficulty)
                 values (:title, :composer_id, :instrument_id, :difficulty)
                 """;
         KeyHolder keyHolder = new GeneratedKeyHolder();
         namedJdbc.update(insertSql, params, keyHolder);
         long newWorkId = getNewWorkId(keyHolder);
-        long[] genre_ids = work.getGenres().stream().map(Genre::getId).mapToLong(Long::longValue).toArray();
+        long[] genreIds = work.getGenres().stream()
+                .map(Genre::getId)
+                .mapToLong(Long::longValue)
+                .toArray();
         MapSqlParameterSource wgParams = new MapSqlParameterSource();
         wgParams.addValue("work_id", newWorkId);
-        wgParams.addValue("genre_ids", genre_ids);
-        String wgInsertSql = """
+        wgParams.addValue("genre_ids", genreIds);
+        String wgInsertSql =
+                """
                 INSERT INTO hw2.work_genre (work_id, genre_id)
                 SELECT :work_id, unnest(:genre_ids::bigint[])
                 ON CONFLICT DO NOTHING
@@ -215,9 +219,8 @@ public class WorkDaoImpl implements WorkDao {
                 work.getComposer(),
                 work.getInstrument(),
                 work.getGenres(),
-                work.getRecordings(),//TODO Записей еще нет. Надо делать отдельно
-                work.getDifficulty()
-        );
+                work.getRecordings(),
+                work.getDifficulty());
     }
 
     @Override
@@ -231,8 +234,7 @@ public class WorkDaoImpl implements WorkDao {
         throw new UnsupportedOperationException("delete TDD");
     }
 
-    private record WorkVo(long work_id, String title, Composer composer, Instrument instrument, String difficulty) {
-    }
+    private record WorkVo(long work_id, String title, Composer composer, Instrument instrument, String difficulty) {}
 
     private record RecordingWorkIdVo(
             long recording_id,
@@ -241,9 +243,7 @@ public class WorkDaoImpl implements WorkDao {
             String label,
             Date recorded_at,
             int duration,
-            String source_url) {
-    }
+            String source_url) {}
 
-    private record GengreVo(long work_id, long genre_id, String name) {
-    }
+    private record GengreVo(long work_id, long genre_id, String name) {}
 }

@@ -7,12 +7,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api")
+@SuppressWarnings("java:S106")
 public class TestHttpPostController {
 
     @PostMapping(value = "/test")
-    public void testPost(@RequestBody TestDto dto) { //TODO: спросить, почему json по дефолту, и какие есть альтернативы
+    public void testPost(@RequestBody TestDto dto) {
         System.out.println(dto);
     }
 }
-
-

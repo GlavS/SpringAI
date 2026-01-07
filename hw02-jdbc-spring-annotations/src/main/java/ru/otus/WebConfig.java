@@ -8,5 +8,4 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = "ru.otus.web")
-public class WebConfig implements WebMvcConfigurer {
-}
+public class WebConfig implements WebMvcConfigurer {}

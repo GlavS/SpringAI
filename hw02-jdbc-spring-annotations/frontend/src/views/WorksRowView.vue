@@ -1,8 +1,9 @@
 <script lang="ts" setup>
 import type {WorkDto} from "@/api/WorksApi";
 import WorkDetailsPanel from "@/views/WorkDetailsPanel.vue";
+import {useRouter} from "vue-router";
 
-defineProps<{
+const props = defineProps<{
   work: WorkDto
   expanded: boolean
 }>()
@@ -10,6 +11,12 @@ defineProps<{
 const emit = defineEmits<{
   (e: 'toggle', id: number): void
 }>()
+
+const router = useRouter()
+
+function openDetails(){
+  router.push(`/works/${props.work.id}`)
+}
 
 </script>
 
@@ -21,9 +28,14 @@ const emit = defineEmits<{
     <td>{{ work.instrument?.name }}</td>
     <td>{{ work.difficulty }}</td>
     <td class="text-end">
+      <div class="btn-group" role="group">
       <button class="btn btn-sm btn-outline-secondary" @click.stop="emit('toggle', work.id)">
         {{ expanded ? 'Hide' : 'Details' }}
       </button>
+      <button class="btn btn-sm btn-outline-primary" @click.stop="openDetails">
+        Open
+      </button>
+      </div>
     </td>
   </tr>
 
