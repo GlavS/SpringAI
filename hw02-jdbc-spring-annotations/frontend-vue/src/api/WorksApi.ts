@@ -30,7 +30,7 @@ export type RecordingDto = {
     id: Id
     performer: string
     label?: string | null
-    recordedAt?: string | null
+    date?: number | null
     durationSec?: number | null
     sourceUrl?: string | null
 }

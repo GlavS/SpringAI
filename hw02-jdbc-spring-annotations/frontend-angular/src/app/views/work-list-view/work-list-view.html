@@ -1,0 +1,98 @@
+<div class="container py-4">
+  <h3 class="mb-3">Works</h3>
+  @if (state$ | async; as state) {
+    <div>
+      @switch (state.status) {
+        @case ('error') {
+          <div class="alert alert-danger">{{ state.message }}</div>
+        }
+        @case ('loading') {
+          <div>Loading...</div>
+        }
+        @case ('success') {
+          <table class="table table-striped align-middle">
+            <thead>
+            <tr>
+              <th style="width: 80px;">ID</th>
+              <th>Title</th>
+              <th>Composer</th>
+              <th>Instrument</th>
+              <th>Difficulty</th>
+              <th style="width: 120px;"></th>
+            </tr>
+            </thead>
+
+            <tbody>
+              @for (w of state.data; track w.id) {
+                <tr>
+                  <td style="width: 80px;">{{ w.id }}</td>
+                  <td>{{ w.title }}</td>
+
+                  <!-- Если у тебя composer/instrument/difficulty — объекты, то лучше .name -->
+                  <td>{{ w.composer.name }} {{ w.composer.surname }}</td>
+                  <td>{{ w.instrument.name }}</td>
+                  <td>{{ w.difficulty }}</td>
+
+                  <td style="width: 120px;" class="text-end">
+                    <button
+                      type="button"
+                      class="btn btn-sm btn-outline-secondary"
+                      (click)="toggle(w.id)"
+                    >
+                      {{ expandedId === w.id ? 'Hide' : 'Details' }}
+                    </button>
+                  </td>
+                </tr>
+
+                @if (expandedId === w.id) {
+                  <td colspan="6">
+                    <div class="mb-2">
+                      <strong>Genres:</strong>
+                      @if (!w.genres.length) {
+                        <span class="text-muted"> none</span>
+                      } @else {
+                        <span>
+                        @for (g of w.genres; track g.id) {
+                          <span class="badge text-bg-secondary me-1">
+                            {{ g.name }}
+                          </span>
+                        }
+                      </span>
+                      }
+                    </div>
+                    <div>
+                      <strong>Recordings:</strong>
+                      @if (!w.recordings.length) {
+                        <span class="text-muted"> none</span>
+                      } @else {
+                        <ul class="mb-0">
+                          @for (r of w.recordings; track r.id) {
+                            <li>
+                              {{ r.performer }}
+                              @if (r.label) {
+                                <span>• {{ r.label }}</span>
+                              }
+                              @if (r.date) {
+                                <span>• ({{ r.date | date:'mediumDate' }})</span>
+                              }
+                              @if (r.durationSec != null) {
+                                <span> • {{ fmtDuration(r.durationSec) }}</span>
+                              }
+                              @if (r.sourceUrl) {
+                                <span> • <a [href]="r.sourceUrl" rel="noreferrer" target="_blank">source</a></span>
+                              }
+                            </li>
+                          }
+                        </ul>
+                      }
+                    </div>
+                  </td>
+                }
+              }
+            </tbody>
+          </table>
+        }
+      }
+    </div>
+  }
+</div>

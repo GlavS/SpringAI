@@ -38,6 +38,12 @@ const classical: GenreDto = { id: 2, name: "Classical" }
 const romantic: GenreDto = { id: 3, name: "Romantic" }
 const sacred: GenreDto = { id: 4, name: "Sacred music" }
 
+// ---------- helpers ----------
+
+function toMillis(date: string): number {
+    return new Date(date + "T00:00:00Z").getTime()
+}
+
 // ---------- recordings ----------
 
 const gouldGoldberg: RecordingDto[] = [
@@ -45,7 +51,7 @@ const gouldGoldberg: RecordingDto[] = [
         id: 1,
         performer: "Glenn Gould",
         label: "Columbia",
-        recordedAt: "1955-06-01",
+        date: toMillis("1955-06-01"),
         durationSec: 2280,
         sourceUrl: "https://example.com/gould-1955"
     },
@@ -53,7 +59,7 @@ const gouldGoldberg: RecordingDto[] = [
         id: 2,
         performer: "Glenn Gould",
         label: "CBS",
-        recordedAt: "1981-04-10",
+        date: toMillis("1981-04-10"),
         durationSec: 3080,
         sourceUrl: "https://example.com/gould-1981"
     }
@@ -64,7 +70,7 @@ const perahiaMozart: RecordingDto[] = [
         id: 3,
         performer: "Murray Perahia",
         label: "Sony Classical",
-        recordedAt: "1990-05-12",
+        date: toMillis("1990-05-12"),
         durationSec: 1320,
         sourceUrl: "https://example.com/perahia-mozart"
     }
@@ -75,7 +81,7 @@ const leonhardtBach: RecordingDto[] = [
         id: 4,
         performer: "Gustav Leonhardt",
         label: "Teldec",
-        recordedAt: "1978-09-20",
+        date: toMillis("1978-09-20"),
         durationSec: 1560,
         sourceUrl: "https://example.com/leonhardt-bach"
     }
@@ -86,7 +92,7 @@ const karajanBeethoven: RecordingDto[] = [
         id: 5,
         performer: "Herbert von Karajan",
         label: "Deutsche Grammophon",
-        recordedAt: "1963-11-03",
+        date: toMillis("1963-11-03"),
         durationSec: 2520,
         sourceUrl: "https://example.com/karajan-beethoven"
     }

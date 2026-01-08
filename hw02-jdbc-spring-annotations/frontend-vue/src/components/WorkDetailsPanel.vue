@@ -12,6 +12,11 @@ function fmtDuration(sec?: number | null) {
   return `${m}:${String(s).padStart(2, '0')}`
 }
 
+function formatDate(ms?: number | null): string {
+  if (!ms) return '';
+  return new Date(ms).toLocaleDateString();
+}
+
 </script>
 
 <template>
@@ -38,7 +43,7 @@ function fmtDuration(sec?: number | null) {
         <li v-for="r in work.recordings" :key="r.id">
           {{ r.performer }}
           <span v-if="r.label"> • {{ r.label }}</span>
-          <span v-if="r.recordedAt"> ({{ r.recordedAt }})</span>
+          <span v-if="r.date"> ({{ formatDate(r.date) }})</span>
           <span v-if="r.durationSec != null"> • {{ fmtDuration(r.durationSec) }}</span>
           <span v-if="r.sourceUrl">
               — <a :href="r.sourceUrl" rel="noreferrer" target="_blank">source</a>
