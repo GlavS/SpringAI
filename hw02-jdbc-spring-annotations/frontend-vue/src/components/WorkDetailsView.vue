@@ -3,8 +3,8 @@
 import {WorkDto, worksApi} from "@/api/WorksApi";
 import {useRoute, useRouter} from "vue-router";
 import {computed, onMounted, ref} from "vue";
-import WorkDetailsPanel from "@/views/WorkDetailsPanel.vue";
-import {mockWorks} from "@/views/mocks/WorksViewMocks";
+import WorkDetailsPanel from "@/components/WorkDetailsPanel.vue";
+import {mockWorks} from "@/components/mocks/WorksViewMocks";
 
 type LoadState =
     | { status: 'loading' }

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type {WorkDto} from "@/api/WorksApi";
-import WorkDetailsPanel from "@/views/WorkDetailsPanel.vue";
+import WorkDetailsPanel from "@/components/WorkDetailsPanel.vue";
 import {useRouter} from "vue-router";
 
 const props = defineProps<{

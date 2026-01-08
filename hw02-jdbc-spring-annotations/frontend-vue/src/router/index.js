@@ -1,8 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import WorksView from '@/views/WorksView.vue'
+import WorksView from '@/components/WorksView.vue'
 import Test from "@/scratches/Test.vue";
 import MiniWorks from "@/scratches/TestWorksView.vue"
-import WorkDetailsView from "@/views/WorkDetailsView.vue";
+import WorkDetailsView from "@/components/WorkDetailsView.vue";
 
 const router = createRouter({
     history: createWebHistory(),

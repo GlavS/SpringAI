@@ -2,8 +2,8 @@
 import {onMounted, ref} from 'vue'
 import type {WorkDto} from "@/api/WorksApi"
 import {worksApi} from "@/api/WorksApi"
-import WorksRowView from "@/views/WorksRowView.vue";
-import { mockWorks } from "@/views/mocks/WorksViewMocks"
+import WorksRowView from "@/components/WorksRowView.vue";
+import { mockWorks } from "@/components/mocks/WorksViewMocks"
 
 type LoadState =
     | { status: 'loading' }
