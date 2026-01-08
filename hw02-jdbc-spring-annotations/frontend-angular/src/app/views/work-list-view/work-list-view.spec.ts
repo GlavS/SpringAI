@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { WorkListView } from './work-list-view';
+import { WorkListViewComponent } from './work-list-view';
 
 describe('WorkListView', () => {
-  let component: WorkListView;
-  let fixture: ComponentFixture<WorkListView>;
+  let component: WorkListViewComponent;
+  let fixture: ComponentFixture<WorkListViewComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [WorkListView]
+      imports: [WorkListViewComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(WorkListView);
+    fixture = TestBed.createComponent(WorkListViewComponent);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

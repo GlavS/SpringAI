@@ -1,0 +1,57 @@
+<div class="container py-4">
+  @if (state$ | async; as state) {
+    <div class="d-flex align-items-center justify-content-between mb-3">
+      <div>
+        <h3 class="mb-0">Work details</h3>
+        @if (state.status === 'success') {
+          <div class="text-muted">#{{ state.data.id }}</div>
+        }
+      </div>
+
+      <div class="d-flex gap-2">
+        <button type="button" class="btn btn-outline-secondary" (click)="goBackToList()">
+          Back
+        </button>
+      </div>
+    </div>
+
+    @switch (state.status) {
+      @case ('error') {
+        <div class="alert alert-danger">{{ state.message }}</div>
+      }
+      @case ('loading') {
+        <div>Loading...</div>
+      }
+      @case ('success') {
+        <div class="card mb-3">
+          <div class="card-body">
+            <div class="row g-2">
+              <div class="col-md-6">
+                <strong>Title:</strong>
+                <span class="ms-1">{{ state.data.title }}</span>
+              </div>
+              <div class="col-md-6">
+                <strong>Difficulty:</strong>
+                <span class="ms-1">{{ state.data.difficulty }}</span>
+              </div>
+              <div class="col-md-6">
+                <strong>Composer:</strong>
+                <span class="ms-1">{{ state.data.composer.name }} {{ state.data.composer.surname }}</span>
+              </div>
+              <div class="col-md-6">
+                <strong>Instrument:</strong>
+                <span class="ms-1">{{ state.data.instrument.name }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-body">
+            <app-work-details-panel [work]="state.data" />
+          </div>
+        </div>
+      }
+    }
+  }
+</div>

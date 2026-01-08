@@ -1,10 +1,10 @@
 import { Component, signal } from '@angular/core';
-import {WorkListViewComponent} from './views/work-list-view/work-list-view';
+import {RouterOutlet} from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  imports: [WorkListViewComponent],
-  templateUrl: './app-work.html',
+  imports: [RouterOutlet],
+  templateUrl: './app.html',
   styleUrl: './app.css'
 })
 export class App {

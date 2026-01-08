@@ -10,4 +10,7 @@ export class WorksApiService {
   list(): Observable<WorkDto[]> {
     return this.http.get<WorkDto[]>('/api/works');
   }
+  getById(id: number): Observable<WorkDto> {
+    return this.http.get<WorkDto>(`/api/works/${id}`);
+  }
 }

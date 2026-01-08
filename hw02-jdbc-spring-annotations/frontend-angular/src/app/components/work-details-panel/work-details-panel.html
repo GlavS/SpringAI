@@ -1,0 +1,41 @@
+<div class="mb-2">
+  <strong>Genres:</strong>
+  @if (!work.genres.length) {
+    <span class="text-muted"> none</span>
+  } @else {
+    <span>
+      @for (g of work.genres; track g.id) {
+        <span class="badge text-bg-secondary me-1">{{ g.name }}</span>
+      }
+    </span>
+  }
+</div>
+
+<div>
+  <strong>Recordings:</strong>
+  @if (!work.recordings.length) {
+    <div class="text-muted">none</div>
+  } @else {
+    <ul class="mb-0">
+      @for (r of work.recordings; track r.id) {
+        <li>
+          {{ r.performer }}
+          @if (r.label) {
+            <span> • {{ r.label }}</span>
+          }
+          @if (r.date) {
+            <span> ({{ r.date | date:'mediumDate' }})</span>
+          }
+          @if (r.durationSec != null) {
+            <span> • {{ fmtDuration(r.durationSec) }}</span>
+          }
+          @if (r.sourceUrl) {
+            <span>
+              — <a [href]="r.sourceUrl" rel="noreferrer" target="_blank">source</a>
+            </span>
+          }
+        </li>
+      }
+    </ul>
+  }
+</div>

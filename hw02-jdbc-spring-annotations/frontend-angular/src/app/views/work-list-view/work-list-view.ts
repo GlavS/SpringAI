@@ -5,16 +5,19 @@ import { catchError, map, startWith } from 'rxjs/operators';
 
 import { WorksApiService } from '../../api/works-api';
 import { LoadState, WorkDto } from '../../api/work-dto';
+import {Router} from '@angular/router';
+import {WorkDetailsPanelComponent} from '../../components/work-details-panel/work-details-panel';
 
 @Component({
   selector: 'app-work-list-view',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, WorkDetailsPanelComponent],
   templateUrl: './work-list-view.html',
 })
 export class WorkListViewComponent {
 
   private worksApi: WorksApiService = inject(WorksApiService);
+  private router = inject(Router)
   expandedId: number | null = null;
 
   // поток состояний (как твой state: loading/error/success)
@@ -39,5 +42,9 @@ export class WorkListViewComponent {
 
   private getErrorMessage(e: unknown): string {
     return e instanceof Error ? e.message : String(e);
+  }
+
+  openDetails(id: number) {
+    this.router.navigate(['/works', id]);
   }
 }

@@ -24,7 +24,7 @@
 
             <tbody>
               @for (w of state.data; track w.id) {
-                <tr>
+                <tr style="cursor: pointer" (click)="toggle(w.id)">
                   <td style="width: 80px;">{{ w.id }}</td>
                   <td>{{ w.title }}</td>
 
@@ -34,59 +34,31 @@
                   <td>{{ w.difficulty }}</td>
 
                   <td style="width: 120px;" class="text-end">
-                    <button
-                      type="button"
-                      class="btn btn-sm btn-outline-secondary"
-                      (click)="toggle(w.id)"
-                    >
-                      {{ expandedId === w.id ? 'Hide' : 'Details' }}
-                    </button>
+                    <div class="btn-group" role="group">
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-outline-secondary"
+                        (click)="$event.stopPropagation(); toggle(w.id)"
+                      >
+                        {{ expandedId === w.id ? 'Hide' : 'Details' }}
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-outline-primary"
+                        (click)="$event.stopPropagation(); openDetails(w.id)"
+                      >
+                        Open
+                      </button>
+                    </div>
                   </td>
                 </tr>
 
                 @if (expandedId === w.id) {
-                  <td colspan="6">
-                    <div class="mb-2">
-                      <strong>Genres:</strong>
-                      @if (!w.genres.length) {
-                        <span class="text-muted"> none</span>
-                      } @else {
-                        <span>
-                        @for (g of w.genres; track g.id) {
-                          <span class="badge text-bg-secondary me-1">
-                            {{ g.name }}
-                          </span>
-                        }
-                      </span>
-                      }
-                    </div>
-                    <div>
-                      <strong>Recordings:</strong>
-                      @if (!w.recordings.length) {
-                        <span class="text-muted"> none</span>
-                      } @else {
-                        <ul class="mb-0">
-                          @for (r of w.recordings; track r.id) {
-                            <li>
-                              {{ r.performer }}
-                              @if (r.label) {
-                                <span>• {{ r.label }}</span>
-                              }
-                              @if (r.date) {
-                                <span>• ({{ r.date | date:'mediumDate' }})</span>
-                              }
-                              @if (r.durationSec != null) {
-                                <span> • {{ fmtDuration(r.durationSec) }}</span>
-                              }
-                              @if (r.sourceUrl) {
-                                <span> • <a [href]="r.sourceUrl" rel="noreferrer" target="_blank">source</a></span>
-                              }
-                            </li>
-                          }
-                        </ul>
-                      }
-                    </div>
-                  </td>
+                  <tr class="bg-light">
+                    <td colspan="6">
+                      <app-work-details-panel [work]="w" />
+                    </td>
+                  </tr>
                 }
               }
             </tbody>
