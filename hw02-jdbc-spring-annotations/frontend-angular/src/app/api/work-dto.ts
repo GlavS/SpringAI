@@ -24,7 +24,7 @@ export type RecordingDto = {
   sourceUrl: string;
 };
 
-export type Difficulty = 'EASY' | 'MEDIUM' | 'HARD'; // если есть ещё — допишешь
+export type Difficulty = 'EASY' | 'MEDIUM' | 'HARD' | 'VERY_HARD';
 
 export type WorkDto = {
   id: number;
