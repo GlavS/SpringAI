@@ -7,6 +7,7 @@ import { catchError, distinctUntilChanged, map, startWith, switchMap } from 'rxj
 import { WorksApiService } from '../../api/works-api';
 import { LoadState, WorkDto } from '../../api/work-dto';
 import { WorkDetailsPanelComponent } from '../../components/work-details-panel/work-details-panel';
+import {ErrorMessageService} from '../../services/error-message';
 
 @Component({
   selector: 'app-work-details-view',
@@ -19,6 +20,7 @@ export class WorkDetailsViewComponent {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private worksApi = inject(WorksApiService);
+  private errorService: ErrorMessageService = inject(ErrorMessageService);
 
   readonly id$: Observable<number | null> = this.route.paramMap.pipe(
     map((pm) => {
@@ -38,7 +40,7 @@ export class WorkDetailsViewComponent {
       return this.worksApi.getById(id).pipe(
         map((data) => ({ status: 'success', data } as const)),
         catchError((e: unknown) =>
-          of({ status: 'error', message: this.getErrorMessage(e) } as const)
+          of({ status: 'error', message: this.errorService.getErrorMessage(e) } as const)
         ),
         startWith({ status: 'loading' } as const)
       );
@@ -47,9 +49,5 @@ export class WorkDetailsViewComponent {
 
   goBackToList() {
     this.router.navigate(['/works']);
-  }
-
-  private getErrorMessage(e: unknown): string {
-    return e instanceof Error ? e.message : String(e);
   }
 }

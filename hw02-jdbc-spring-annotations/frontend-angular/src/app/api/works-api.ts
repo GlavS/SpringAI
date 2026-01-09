@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable, of} from 'rxjs';
+import { HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {delay, Observable, of, throwError} from 'rxjs';
 import { WorkDto } from './work-dto';
 import {mockWorks} from './works-api-mocks';
 
@@ -18,9 +18,21 @@ export class WorksApiService {
   //Подключить mock-api  //////////////////////////////////////////////////
 
   list(): Observable<WorkDto[]> {
-    return of(mockWorks)
+    const shouldFail = false; // поставь true чтобы проверить
+
+    if (shouldFail) {
+      return throwError(() =>
+        new HttpErrorResponse({
+          status: 500,
+          statusText: 'Server Error',
+          error: { message: 'Mock: list() failed' }
+        })
+      ).pipe(delay(300));
+    }
+
+    return of(mockWorks).pipe(delay(200));
   }
   getById(id: number): Observable<WorkDto> {
-    return of(mockWorks[id - 1]);
+    return of(mockWorks[id - 1]).pipe(delay(200));
   }
 }

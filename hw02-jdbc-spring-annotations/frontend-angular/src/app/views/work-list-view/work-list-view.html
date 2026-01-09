@@ -27,12 +27,9 @@
                 <tr style="cursor: pointer" (click)="toggle(w.id)">
                   <td style="width: 80px;">{{ w.id }}</td>
                   <td>{{ w.title }}</td>
-
-                  <!-- Если у тебя composer/instrument/difficulty — объекты, то лучше .name -->
                   <td>{{ w.composer.name }} {{ w.composer.surname }}</td>
                   <td>{{ w.instrument.name }}</td>
                   <td>{{ w.difficulty }}</td>
-
                   <td style="width: 120px;" class="text-end">
                     <div class="btn-group" role="group">
                       <button
@@ -56,7 +53,7 @@
                 @if (expandedId === w.id) {
                   <tr class="bg-light">
                     <td colspan="6">
-                      <app-work-details-panel [work]="w" />
+                      <app-work-details-panel [work]="w"/>
                     </td>
                   </tr>
                 }

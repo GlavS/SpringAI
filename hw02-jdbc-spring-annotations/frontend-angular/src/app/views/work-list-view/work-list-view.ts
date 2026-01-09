@@ -7,6 +7,7 @@ import { WorksApiService } from '../../api/works-api';
 import { LoadState, WorkDto } from '../../api/work-dto';
 import {Router} from '@angular/router';
 import {WorkDetailsPanelComponent} from '../../components/work-details-panel/work-details-panel';
+import {ErrorMessageService} from '../../services/error-message';
 
 @Component({
   selector: 'app-work-list-view',
@@ -17,6 +18,7 @@ import {WorkDetailsPanelComponent} from '../../components/work-details-panel/wor
 export class WorkListViewComponent {
 
   private worksApi: WorksApiService = inject(WorksApiService);
+  private errorService: ErrorMessageService = inject(ErrorMessageService);
   private router = inject(Router)
   expandedId: number | null = null;
 
@@ -24,24 +26,13 @@ export class WorkListViewComponent {
   readonly state$: Observable<LoadState<WorkDto[]>> = this.worksApi.list().pipe(
     map((data) => ({ status: 'success', data } as const)),
     catchError((e: unknown) =>
-      of({ status: 'error', message: this.getErrorMessage(e) } as const)
+      of({ status: 'error', message: this.errorService.getErrorMessage(e) } as const)
     ),
     startWith({ status: 'loading' } as const)
   );
 
-  fmtDuration(sec?: number | null) {
-    if (sec == null) return ''
-    const m = Math.floor(sec / 60)
-    const s = sec % 60
-    return `${m}:${String(s).padStart(2, '0')}`
-  }
-
   toggle(id: number) {
     this.expandedId = this.expandedId === id ? null : id;
-  }
-
-  private getErrorMessage(e: unknown): string {
-    return e instanceof Error ? e.message : String(e);
   }
 
   openDetails(id: number) {
