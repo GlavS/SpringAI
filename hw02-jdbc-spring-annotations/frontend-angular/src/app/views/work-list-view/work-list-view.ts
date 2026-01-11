@@ -22,7 +22,7 @@ export class WorkListViewComponent {
   private router = inject(Router)
   expandedId: number | null = null;
 
-  // поток состояний (как твой state: loading/error/success)
+  // поток состояний (аналог проекта Vue: loading/error/success)
   readonly state$: Observable<LoadState<WorkDto[]>> = this.worksApi.list().pipe(
     map((data) => ({ status: 'success', data } as const)),
     catchError((e: unknown) =>

@@ -36,6 +36,7 @@ export type WorkDto = {
   difficulty: Difficulty;
 };
 
+//Хранилище состояний UI
 export type LoadState<T> =
   | { status: 'loading' }
   | { status: 'error'; message: string }
