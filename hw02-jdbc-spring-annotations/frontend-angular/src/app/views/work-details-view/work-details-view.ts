@@ -4,10 +4,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { catchError, distinctUntilChanged, map, startWith, switchMap } from 'rxjs/operators';
 
-import { WorksApiService } from '../../api/works-api';
+import {WorksApi } from '../../api/works-api';
 import { LoadState, WorkDto } from '../../api/work-dto';
 import { WorkDetailsPanelComponent } from '../../components/work-details-panel/work-details-panel';
 import {ErrorMessageService} from '../../services/error-message';
+import {WORKS_API} from '../../api/works-api-token';
 
 @Component({
   selector: 'app-work-details-view',
@@ -19,7 +20,7 @@ import {ErrorMessageService} from '../../services/error-message';
 export class WorkDetailsViewComponent {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
-  private worksApi = inject(WorksApiService);
+  private worksApi:WorksApi = inject(WORKS_API);
   private errorService: ErrorMessageService = inject(ErrorMessageService);
 
   readonly id$: Observable<number | null> = this.route.paramMap.pipe(

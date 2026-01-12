@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { Observable, of } from 'rxjs';
 import { catchError, map, startWith } from 'rxjs/operators';
 
-import { WorksApiService } from '../../api/works-api';
 import { LoadState, WorkDto } from '../../api/work-dto';
 import {Router} from '@angular/router';
 import {WorkDetailsPanelComponent} from '../../components/work-details-panel/work-details-panel';
 import {ErrorMessageService} from '../../services/error-message';
+import {WORKS_API} from '../../api/works-api-token';
+import {WorksApi} from '../../api/works-api';
 
 @Component({
   selector: 'app-work-list-view',
@@ -17,7 +18,7 @@ import {ErrorMessageService} from '../../services/error-message';
 })
 export class WorkListViewComponent {
 
-  private worksApi: WorksApiService = inject(WorksApiService);
+  private worksApi: WorksApi = inject(WORKS_API);
   private errorService: ErrorMessageService = inject(ErrorMessageService);
   private router = inject(Router)
   expandedId: number | null = null;

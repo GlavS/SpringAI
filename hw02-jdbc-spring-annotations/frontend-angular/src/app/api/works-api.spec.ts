@@ -1,13 +1,14 @@
 import { TestBed } from '@angular/core/testing';
 
-import { WorksApiService } from './works-api';
+import {inject} from '@angular/core';
+import {WORKS_API} from './works-api-token';
 
 describe('WorksApi', () => {
-  let service: WorksApiService;
+  let service = inject(WORKS_API);
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(WorksApiService);
+    service = TestBed.inject(WORKS_API);
   });
 
   it('should be created', () => {
