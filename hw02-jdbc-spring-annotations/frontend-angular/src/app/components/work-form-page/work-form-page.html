@@ -1,1 +1,9 @@
 <p>work-form-page works in {{ mode }} mode!</p>
+
+
+  <form [formGroup]="workForm" (ngSubmit)="submitValue()" >
+    <label for="textdisplay">{{mode}} title:</label>
+    <input id='textdisplay' type="text" class="m-2" formControlName="title"/>
+    <button type="submit" value="send" class="btn btn-primary">Send</button>
+  </form>
+
