@@ -4,8 +4,8 @@ import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import {provideHttpClient} from '@angular/common/http';
 import {WORKS_API} from './api/works-api-token';
-import {MockApiService} from './api/mock-api-service';
-import {HttpApiService} from './api/http-api-service';
+import {MockApiService} from './api/service/mock-api-service';
+import {HttpApiService} from './api/service/http-api-service';
 import {environment} from './environment';
 
 export const appConfig: ApplicationConfig = {

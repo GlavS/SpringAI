@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { delay, map } from 'rxjs/operators';
-import { WorkDto } from './work-dto'; // поправь путь
-import { RecordingDto } from './work-dto';
-import {mockWorks} from './works-api-mocks'; // поправь путь
+import { WorkDto } from '../data/work-dto'; // поправь путь
+import { RecordingDto } from '../data/work-dto';
+import {mockWorks} from '../data/works-api-mocks'; // поправь путь
 
 @Injectable({ providedIn: 'root' })
 export class MockApiService {

@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Observable, of } from 'rxjs';
 import { catchError, map, startWith } from 'rxjs/operators';
 
-import { LoadState, WorkDto } from '../../api/work-dto';
+import { LoadState, WorkDto } from '../../api/data/work-dto';
 import {Router} from '@angular/router';
 import {WorkDetailsPanelComponent} from '../../components/work-details-panel/work-details-panel';
 import {ErrorMessageService} from '../../services/error-message';

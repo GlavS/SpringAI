@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { WorkDto } from '../../api/work-dto';
+import { WorkDto } from '../../api/data/work-dto';
 
 @Component({
   selector: 'app-work-details-panel',

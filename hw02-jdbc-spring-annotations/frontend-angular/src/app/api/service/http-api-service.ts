@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {WorkDto} from './work-dto';
+import {WorkDto} from '../data/work-dto';
 
 @Injectable({ providedIn: 'root' })
 export class HttpApiService {
