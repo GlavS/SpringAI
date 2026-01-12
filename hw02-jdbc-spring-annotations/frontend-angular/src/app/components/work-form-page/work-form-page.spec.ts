@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { WorkFormPage } from './work-form-page';
+import {WorkFormPage} from './work-form-page';
 
 describe('WorkFormPage', () => {
   let component: WorkFormPage;

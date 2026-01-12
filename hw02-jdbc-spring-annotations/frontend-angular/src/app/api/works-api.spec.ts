@@ -1,4 +1,4 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
 import {inject} from '@angular/core';
 import {WORKS_API} from './works-api-token';

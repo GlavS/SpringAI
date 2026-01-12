@@ -9,7 +9,7 @@
       </div>
 
       <div class="d-flex gap-2">
-        <button type="button" class="btn btn-outline-secondary" (click)="goBackToList()">
+        <button (click)="goBackToList()" class="btn btn-outline-secondary" type="button">
           Back
         </button>
       </div>
@@ -48,7 +48,7 @@
 
         <div class="card">
           <div class="card-body">
-            <app-work-details-panel [work]="state.data" />
+            <app-work-details-panel [work]="state.data"/>
           </div>
         </div>
       }

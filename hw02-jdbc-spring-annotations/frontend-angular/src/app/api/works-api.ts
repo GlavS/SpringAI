@@ -1,6 +1,6 @@
 // works-api.ts
-import { Observable } from 'rxjs';
-import { WorkDto } from './data/work-dto';
+import {Observable} from 'rxjs';
+import {WorkDto} from './data/work-dto';
 
 export interface WorksApi {
   list(): Observable<WorkDto[]>;

@@ -1,9 +1,9 @@
-import { Component, inject} from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { Observable, of } from 'rxjs';
-import { catchError, map, startWith } from 'rxjs/operators';
+import {Component, inject} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {Observable, of} from 'rxjs';
+import {catchError, map, startWith} from 'rxjs/operators';
 
-import { LoadState, WorkDto } from '../../api/data/work-dto';
+import {LoadState, WorkDto} from '../../api/data/work-dto';
 import {Router} from '@angular/router';
 import {WorkDetailsPanelComponent} from '../../components/work-details-panel/work-details-panel';
 import {ErrorMessageService} from '../../services/error-message';
@@ -18,11 +18,9 @@ import {WorksApi} from '../../api/works-api';
 })
 export class WorkListViewComponent {
 
+  expandedId: number | null = null;
   private worksApi: WorksApi = inject(WORKS_API);
   private errorService: ErrorMessageService = inject(ErrorMessageService);
-  private router = inject(Router)
-  expandedId: number | null = null;
-
   // поток состояний (аналог проекта Vue: loading/error/success)
   readonly state$: Observable<LoadState<WorkDto[]>> = this.worksApi.list().pipe(
     map((data) => ({ status: 'success', data } as const)),
@@ -31,6 +29,7 @@ export class WorkListViewComponent {
     ),
     startWith({ status: 'loading' } as const)
   );
+  private router = inject(Router)
 
   toggle(id: number) {
     this.expandedId = this.expandedId === id ? null : id;

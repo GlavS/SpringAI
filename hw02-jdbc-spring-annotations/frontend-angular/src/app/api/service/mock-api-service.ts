@@ -1,8 +1,7 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
-import { delay, map } from 'rxjs/operators';
-import { WorkDto } from '../data/work-dto'; // поправь путь
-import { RecordingDto } from '../data/work-dto';
+import {Injectable} from '@angular/core';
+import {BehaviorSubject, Observable, of, throwError} from 'rxjs';
+import {delay, map} from 'rxjs/operators';
+import {RecordingDto, WorkDto} from '../data/work-dto'; // поправь путь
 import {mockWorks} from '../data/works-api-mocks'; // поправь путь
 
 @Injectable({ providedIn: 'root' })
@@ -48,6 +47,7 @@ export class MockApiService {
     const next = [...list, created];
 
     this.commit(next);
+    console.log('CREATE payload : ', work)
     return of(structuredClone(created)).pipe(delay(this.LATENCY_MS));
   }
 
@@ -71,10 +71,20 @@ export class MockApiService {
     next[idx] = updated;
 
     this.commit(next);
+    console.log('UPDATE payload: ', work)
     return of(structuredClone(updated)).pipe(delay(this.LATENCY_MS));
   }
 
   // ---------- helpers ----------
+
+  // опционально: сброс моков
+  resetMocks() {
+    const init = this.initialMocks();
+    this.store$.next(init);
+    this.nextWorkId = this.calcNextWorkId(init);
+    this.nextRecordingId = this.calcNextRecordingId(init);
+    if (this.persist) localStorage.removeItem(this.STORAGE_KEY);
+  }
 
   private normalizeForCreateOrUpdate(input: WorkDto, isCreate: boolean): WorkDto {
     const w = structuredClone(input);
@@ -136,14 +146,5 @@ export class MockApiService {
     const all = list.flatMap(w => w.recordings ?? []);
     const maxId = Math.max(0, ...all.map(r => r.id ?? 0));
     return maxId + 1;
-  }
-
-  // опционально: сброс моков
-  resetMocks() {
-    const init = this.initialMocks();
-    this.store$.next(init);
-    this.nextWorkId = this.calcNextWorkId(init);
-    this.nextRecordingId = this.calcNextRecordingId(init);
-    if (this.persist) localStorage.removeItem(this.STORAGE_KEY);
   }
 }

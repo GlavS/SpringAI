@@ -24,25 +24,25 @@
 
             <tbody>
               @for (w of state.data; track w.id) {
-                <tr style="cursor: pointer" (click)="toggle(w.id)">
+                <tr (click)="toggle(w.id)" style="cursor: pointer">
                   <td style="width: 80px;">{{ w.id }}</td>
                   <td>{{ w.title }}</td>
                   <td>{{ w.composer.name }} {{ w.composer.surname }}</td>
                   <td>{{ w.instrument.name }}</td>
                   <td>{{ w.difficulty }}</td>
-                  <td style="width: 120px;" class="text-end">
+                  <td class="text-end" style="width: 120px;">
                     <div class="btn-group" role="group">
                       <button
-                        type="button"
-                        class="btn btn-sm btn-outline-secondary"
                         (click)="$event.stopPropagation(); toggle(w.id)"
+                        class="btn btn-sm btn-outline-secondary"
+                        type="button"
                       >
                         {{ expandedId === w.id ? 'Hide' : 'Details' }}
                       </button>
                       <button
-                        type="button"
-                        class="btn btn-sm btn-outline-primary"
                         (click)="$event.stopPropagation(); openDetails(w.id)"
+                        class="btn btn-sm btn-outline-primary"
+                        type="button"
                       >
                         Open
                       </button>

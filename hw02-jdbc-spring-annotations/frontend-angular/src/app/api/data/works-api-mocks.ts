@@ -1,10 +1,4 @@
-import type {
-    WorkDto,
-    ComposerDto,
-    InstrumentDto,
-    GenreDto,
-    RecordingDto
-} from "./work-dto"
+import type {ComposerDto, GenreDto, InstrumentDto, RecordingDto, WorkDto} from "./work-dto"
 
 // ---------- shared dictionaries ----------
 

@@ -1,4 +1,4 @@
-import { Routes } from '@angular/router';
+import {Routes} from '@angular/router';
 import {WorkListViewComponent} from './views/work-list-view/work-list-view';
 import {WorkDetailsViewComponent} from './views/work-details-view/work-details-view';
 import {WorkFormPage} from './components/work-form-page/work-form-page';
