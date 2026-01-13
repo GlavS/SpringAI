@@ -1,9 +1,6 @@
-export type ComposerDto = {
-  id: number;
-  name: string;
-  surname: string;
-  country: string;
-};
+import {ComposerDto} from './model/composer-type';
+import {RecordingDto} from './model/recording-type';
+import {Difficulty} from './model/difficulty-type';
 
 export type InstrumentDto = {
   id: number;
@@ -14,17 +11,6 @@ export type GenreDto = {
   id: number;
   name: string;
 };
-
-export type RecordingDto = {
-  id: number;
-  performer: string;
-  label: string;
-  date: number;        // epoch millis
-  durationSec: number;
-  sourceUrl: string;
-};
-
-export type Difficulty = 'EASY' | 'MEDIUM' | 'HARD' | 'VERY_HARD';
 
 export type WorkDto = {
   id: number;
