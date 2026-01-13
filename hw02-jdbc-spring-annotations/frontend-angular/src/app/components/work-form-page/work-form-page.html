@@ -2,8 +2,15 @@
 
 
   <form [formGroup]="workForm" (ngSubmit)="submitValue()" >
-    <label for="textdisplay">{{mode}} title:</label>
-    <input id='textdisplay' type="text" class="m-2" formControlName="title"/>
+    <label for="title">{{mode}} title:</label>
+    <input id='title' type="text" class="m-2" formControlName="title"/>
+
+    <label for="instrument">instrument:</label>
+    <input id='instrument' type="text" class="m-2" formControlName="instrument"/>
+
+    <label for="difficulty">difficulty:</label>
+    <input id='difficulty' type="text" class="m-2" formControlName="difficulty"/>
+
     <button type="submit" value="send" class="btn btn-primary">Send</button>
   </form>
 

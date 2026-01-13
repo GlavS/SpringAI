@@ -1,6 +1,6 @@
 import {Component, inject} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
 
 @Component({
   selector: 'app-work-form-page',
@@ -15,18 +15,18 @@ import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
 export class WorkFormPage {
   private route = inject(ActivatedRoute);
   protected mode:string = this.route.snapshot.paramMap.has("id")? 'EDIT' : 'CREATE';
+  private fb: FormBuilder = inject(FormBuilder);
 
-  workForm = new FormGroup(
-    {
-      title: new FormControl('')
-    }
-  );
+  workForm = this.fb.nonNullable.group({
+    title: '',
+    instrument: '',
+    difficulty: ''
+  });
 
   submitValue(){
-    if(this.mode === 'CREATE'){
-      console.log('Creating title: ', this.workForm.value.title);
-    } else {
-      console.log('Editing title: ', this.workForm.value.title);
-    }
+   console.log(this.mode);
+   console.log(this.workForm.value.title)
+   console.log(this.workForm.value.instrument)
+   console.log(this.workForm.value.difficulty)
   }
 }
